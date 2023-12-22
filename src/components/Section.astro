@@ -1,0 +1,17 @@
+---
+export interface Props {
+	title: string;
+    src: string;
+    text: string;
+    pclass: string;
+}
+
+const {title, src, text, pclass} = Astro.props;
+---
+<section class={pclass+" lg:mb-20 w-2/4 lg:flex lg:items-center lg:justify-center my-2 lg:my-5"}>
+    <img src={src} class="sliding-image off-screen-left transition-all duration-500 w-full h-auto max-w-xs"/>
+    <div class="mt-1 lg:mt-0 lg:ml-4">
+        <h2 class="text-xl lg:text-2xl mb-1">{title}</h2>
+        <p class="text-sm lg:text-lg">{text}</p>
+    </div>
+</section>

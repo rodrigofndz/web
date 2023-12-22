@@ -1,0 +1,106 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Section from "../components/Section.astro";
+import SkillList from "../components/SkillList.astro";
+import TimeLine from "../components/TimeLine.astro";
+
+import mail from '../assets/mail.png';
+import github from '../assets/github-mark.png';
+import linkedin from '../assets/linkedin.png';
+import profile from '../assets/profile-photo.jpg';
+import analysis from '../assets/undraw_analysis_dq08.svg';
+import electricity from '../assets/undraw_electricity_k2ft.svg';
+import projections from '../assets/undraw_projections_re_ulc6.svg';
+import excavator from '../assets/excavator.gif';
+
+const title1 = 'Unlock the Power of Technology';
+const title2 = 'Transform Your Digital Vision into Reality';
+const title3 = 'Stay Ahead of the Technology Curve';
+
+const p1 = `Are you looking for a skilled IT professional to take your business to new heights? 
+                I'm here to help. With my extensive experience in web development, software 
+                engineering, and more, I've got you covered. Together, we can harness the power of 
+                technology to drive growth, streamline operations, and exceed your business goals. 
+                Take the first step towards success by partnering with me, your top-notch IT 
+                engineer.`;
+const p2 = `In today's digital landscape, having a strong online presence is crucial. 
+                As an IT engineer, I specialize in turning your digital vision into a reality. 
+                Whether you need a stunning website, a cutting-edge mobile app, or custom software 
+                solutions, I have the skills and expertise to deliver results. I work closely with 
+                you to understand your unique requirements and create tailor-made solutions that 
+                drive engagement, enhance user experience, and boost your brand's visibility. Get 
+                ready to stand out from the competition with me.`
+const p3 = `Technology is constantly evolving, and staying ahead of the curve is essential for 
+                business success. I stay up-to-date with the latest industry trends and technologies. 
+                I am adept at implementing innovative solutions that give your business a competitive 
+                edge. Whether it's adopting cloud computing or optimizing cybersecurity measures. I 
+                have the knowledge and expertise to propel your business forward. Don't let technology 
+                hold you back and stay ahead in the digital era.`;
+const aboutme = `I'm an IT engineer who loves technology and enjoys messing with new stuff. Graduated 
+                    in 2018 I keep working in the field and learning to improve myself. I consider myself 
+                    a backend developer but evrything is a web app, so here I am.`;
+---
+
+<Layout title="Home">
+    <header class="text-base color-beige flex justify-between items-center h-10 py-1">
+        <div class="w-1/5"></div>
+        <div class="w-2/5"></div>
+        <div class="flex align-center h-full">
+            <a href="mailto:rodrigo.fernandez@rodfer.me" class="h-full mx-2">
+                <img src={mail.src} class="h-full"/>
+            </a>
+            <a href="https://github.com/rodrigofndz" class="h-full mx-2">
+                <img src={github.src} class="h-full"/>
+            </a>
+            <a href="https://www.linkedin.com/in/rodrigo-fernandez-sanchez-124299232/" class="h-full mx-2">
+                <img src={linkedin.src} class="h-full"/>
+            </a>
+        </div>
+        <div />
+    </header>
+
+    <main class="flex flex-col justify-center items-center h-full">
+        <div class="flex justify-around align-center w-full py-8">
+            <div />
+            <div class="ml-12 md:ml-0 self-center">
+                <h1 class="text-5xl lg:text-9xl">Rodrigo</h1>
+                <h1 class="text-5xl lg:text-9xl">Fernández</h1>
+            </div>
+            <div />
+            <div class="ml-12 md:ml-0 md:shrink-0">
+                <img src={profile.src} class="off-screen-right transition-all duration-500 w-2/3 lg:w-full h-auto max-w-xs lg:max-w-sm rounded-md" id="profile-photo"/>
+            </div>
+            <div />
+        </div>
+
+        <div class="flex flex-col justify-center items-start">
+            <Section title={title1} src={analysis.src} text={p1} pclass="mx-auto w-2/3" />
+            <Section title={title2} src={electricity.src} text={p2} pclass="mx-auto w-2/3" />
+            <Section title={title3} src={projections.src} text={p3} pclass="mx-auto w-2/3" />
+        </div>
+
+        <SkillList />
+
+        <div class={"mx-auto w-2/4 my-5 lg:my-10"}>
+            <h2 class="text-2xl lg:text-5xl mb-3">About me</h1>
+            <p class="text-sm lg:text-lg">{aboutme}</p>
+        </div>
+
+        <div class="mx-auto w-2/4 mb-5 lg:mb-10">
+            <h2 class="text-2xl lg:text-5xl mb-3">Projects</h1>
+            <div class="flex justify-center">
+                <img src={excavator.src} />
+            </div>
+        </div>
+        <div class="mx-auto w-2/4 mb-5 lg:mb-10">
+            <h2 class="text-2xl lg:text-5xl mb-3">Experience</h1>
+            <div class="flex justify-center">
+                <TimeLine pclass="mx-auto w-2/4 lg:mb-10"/>
+            </div>
+        </div>
+    </main>
+
+    <footer class="text-center my-2">
+        <p>© 2023 Rodrigo Fernández. All rights reserved.</p>
+    </footer>
+</Layout>
