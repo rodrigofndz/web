@@ -2,9 +2,8 @@
 import Layout from "../layouts/Layout.astro";
 import Section from "../components/Section.astro";
 import SkillList from "../components/SkillList.astro";
-import TimeLine from "../components/TimeLine.astro";
 
-import mail from '../assets/mail.png';
+import mail from '../assets/mail.svg';
 import github from '../assets/github-mark.png';
 import linkedin from '../assets/linkedin.png';
 import profile from '../assets/profile-photo.jpg';
@@ -13,6 +12,7 @@ import electricity from '../assets/undraw_electricity_k2ft.svg';
 import projections from '../assets/undraw_projections_re_ulc6.svg';
 import excavator from '../assets/excavator.gif';
 
+const email = 'rodrigo.fernandez@rodfer.me';
 const title1 = 'Unlock the Power of Technology';
 const title2 = 'Transform Your Digital Vision into Reality';
 const title3 = 'Stay Ahead of the Technology Curve';
@@ -42,23 +42,23 @@ const aboutme = `I'm an IT engineer who loves technology and enjoys messing with
 ---
 
 <Layout title="Home">
-    <header class="text-base color-beige flex justify-between items-center h-10 py-1">
-        <div class="w-1/5"></div>
-        <div class="w-2/5"></div>
-        <div class="flex align-center h-full">
+    
+    <header class="text-base color-beige flex justify-between h-10 py-1">
+        <div class="w-3/5" />
+        <div class="flex items-center">
+            <p class="mr-2 text-center text-black font-semibold">{email}</p>
             <a href="mailto:rodrigo.fernandez@rodfer.me" class="h-full mx-2">
                 <img src={mail.src} class="h-full"/>
             </a>
             <a href="https://github.com/rodrigofndz" class="h-full mx-2">
                 <img src={github.src} class="h-full"/>
             </a>
-            <a href="https://www.linkedin.com/in/rodrigo-fernandez-sanchez-124299232/" class="h-full mx-2">
+            <a href="https://www.linkedin.com/in/rodrigo-fernandez-sanchez-124299232/" class="h-full ml-2 mr-1">
                 <img src={linkedin.src} class="h-full"/>
             </a>
         </div>
         <div />
     </header>
-
     <main class="flex flex-col justify-center items-center h-full">
         <div class="flex justify-around align-center w-full py-8">
             <div />
@@ -92,15 +92,13 @@ const aboutme = `I'm an IT engineer who loves technology and enjoys messing with
                 <img src={excavator.src} />
             </div>
         </div>
-        <div class="mx-auto w-2/4 mb-5 lg:mb-10">
-            <h2 class="text-2xl lg:text-5xl mb-3">Experience</h1>
-            <div class="flex justify-center">
-                <TimeLine pclass="mx-auto w-2/4 lg:mb-10"/>
-            </div>
-        </div>
     </main>
 
     <footer class="text-center my-2">
-        <p>© 2023 Rodrigo Fernández. All rights reserved.</p>
+        <p id="copyright"/>
     </footer>
 </Layout>
+
+<script>
+    document.getElementById('copyright').textContent = `© ${new Date().getFullYear()} Rodrigo Fernández. All rights reserved.`;
+</script>
