@@ -44,83 +44,87 @@ const aboutme = `I'm an IT engineer who loves technology and enjoys messing with
 <Layout title="Home">
     
     <header class="text-base color-beige flex justify-between h-10 py-1">
-        <div class="w-3/5" />
-        <div class="flex items-center">
+        <div class="xl:w-3/5" />
+        <div class="flex items-center overflow-hidden h-full">
             <p class="mr-2 text-center text-black font-semibold">{email}</p>
-            <a href="mailto:rodrigo.fernandez@rodfer.me" class="h-full mx-2">
-                <img src={mail.src} class="h-full"/>
+            <a href="mailto:rodrigo.fernandez@rodfer.me" class="w-auto h-auto mx-2">
+                <img src={mail.src} class="min-w-3 min-h-3  max-h-20 md:max-h-20 flex-shrink-0"/>
             </a>
-            <a href="https://github.com/rodrigofndz" class="h-full mx-2">
-                <img src={github.src} class="h-full"/>
+            <a href="https://github.com/rodrigofndz" class="w-auto h-auto mx-2">
+                <img src={github.src} class="min-w-3 min-h-3  max-h-6 md:max-h-8 flex-shrink-0"/>
             </a>
-            <a href="https://www.linkedin.com/in/rodrigo-fernandez-sanchez-124299232/" class="h-full ml-2 mr-1">
-                <img src={linkedin.src} class="h-full"/>
+            <a href="https://www.linkedin.com/in/rodrigo-fernandez-sanchez-124299232/" class="w-auto h-auto ml-2 mr-1">
+                <img src={linkedin.src} class="min-w-3 min-h-3  max-h-6 md:max-h-8 flex-shrink-0"/>
             </a>
         </div>
         <div />
     </header>
     <main class="flex flex-col justify-center items-center h-full">
-        <div class="bg-blue-950 flex justify-around align-center w-full py-8">
+        <div class="bg-blue-950 flex justify-around align-center w-full py-24">
             <div />
             <div class="ml-12 md:ml-0 self-center">
                 <h1 class="text-5xl lg:text-9xl">Rodrigo</h1>
                 <h1 class="text-5xl lg:text-9xl">Fernández</h1>
             </div>
             <div />
-            <div class="ml-12 md:ml-0 md:shrink-0">
+            <div class="ml-12 min-h-36 min-w-36 md:ml-0 md:shrink-0">
                 <img src={profile.src} class="off-screen-right transition-all duration-500 w-2/3 lg:w-full h-auto max-w-xs lg:max-w-sm rounded-md" id="profile-photo"/>
             </div>
             <div />
         </div>
-        <div class="bg-blue-950 w-full h-20">
-            <svg viewBox="0 0 1440 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path
-                    d="M0 43.9999C106.667 43.9999 213.333 7.99994 320 7.99994C426.667 7.99994 533.333 43.9999 640 43.9999C746.667 43.9999 853.333 7.99994 960 7.99994C1066.67 7.99994 1173.33 43.9999 1280 43.9999C1386.67 43.9999 1440 19.0266 1440 9.01329V100H0V43.9999Z"
-                    class="fill-current text-blue-900"></path>
+
+        <div class="bg-blue-950 w-full">
+            <svg class="h-24 w-full" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320" preserveAspectRatio="none">
+                <path class="text-blue-900 fill-current" fill-opacity="0.99"
+                    d="M0,288L60,245.3C120,203,240,117,360,112C480,107,600,181,720,229.3C840,277,960,299,1080,256C1200,213,1320,107,1380,53.3L1440,0L1440,320L1380,320C1320,320,1200,320,1080,320C960,320,840,320,720,320C600,320,480,320,360,320C240,320,120,320,60,320L0,320Z"></path>
             </svg>
         </div>
+
         <div class="flex flex-col justify-center items-start">
-            <div class="bg-blue-900 w-full">
+            <div class="bg-blue-900 py-24 w-full">
                 <Section title={title1} src={analysis.src} text={p1} pclass="mx-auto w-2/3" />
             </div>
-            <div class="bg-blue-900 w-full h-20">
-                <svg viewBox="0 0 1440 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path
-                        d="M0 43.9999C106.667 43.9999 213.333 7.99994 320 7.99994C426.667 7.99994 533.333 43.9999 640 43.9999C746.667 43.9999 853.333 7.99994 960 7.99994C1066.67 7.99994 1173.33 43.9999 1280 43.9999C1386.67 43.9999 1440 19.0266 1440 9.01329V100H0V43.9999Z"
-                        class="fill-current text-blue-800"></path>
+
+            <div class="bg-blue-900 w-full">
+                <svg class="h-24 w-full" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320" preserveAspectRatio="none">
+                    <path class="text-blue-800 fill-current" fill-opacity="0.99"
+                        d="M0,288L60,245.3C120,203,240,117,360,112C480,107,600,181,720,229.3C840,277,960,299,1080,256C1200,213,1320,107,1380,53.3L1440,0L1440,320L1380,320C1320,320,1200,320,1080,320C960,320,840,320,720,320C600,320,480,320,360,320C240,320,120,320,60,320L0,320Z"></path>
                 </svg>
             </div>
-            <div class="bg-blue-800 w-full">
+
+            <div class="bg-blue-800 py-24 w-full">
                 <Section title={title2} src={electricity.src} text={p2} pclass="mx-auto w-2/3" />
             </div>
-            <div class="bg-blue-800 w-full h-20">
-                <svg viewBox="0 0 1440 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path
-                        d="M0 43.9999C106.667 43.9999 213.333 7.99994 320 7.99994C426.667 7.99994 533.333 43.9999 640 43.9999C746.667 43.9999 853.333 7.99994 960 7.99994C1066.67 7.99994 1173.33 43.9999 1280 43.9999C1386.67 43.9999 1440 19.0266 1440 9.01329V100H0V43.9999Z"
-                        class="fill-current text-zinc-600"></path>
+
+            <div class="bg-blue-800 w-full">
+                <svg class="h-24 w-full" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320" preserveAspectRatio="none">
+                    <path class="text-zinc-600 fill-current" fill-opacity="0.99"
+                        d="M0,288L60,245.3C120,203,240,117,360,112C480,107,600,181,720,229.3C840,277,960,299,1080,256C1200,213,1320,107,1380,53.3L1440,0L1440,320L1380,320C1320,320,1200,320,1080,320C960,320,840,320,720,320C600,320,480,320,360,320C240,320,120,320,60,320L0,320Z"></path>
                 </svg>
             </div>
-            <div class="bg-zinc-600 w-full">
+
+            <div class="bg-zinc-600 py-24 w-full">
                 <Section title={title3} src={projections.src} text={p3} pclass="mx-auto w-2/3" />
             </div>
         </div>
 
         <SkillList />
 
-        <div class="bg-indigo-950 w-full">
+        <div class="bg-indigo-950 py-24 w-full">
             <div class={"mx-auto w-2/4 my-5 lg:my-10"}>
                 <h2 class="text-2xl lg:text-5xl mb-3">About me</h1>
                 <p class="text-sm lg:text-lg">{aboutme}</p>
             </div>
         </div>
-        <div class="bg-indigo-950 w-full h-20">
-            <svg viewBox="0 0 1440 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path
-                    d="M0 43.9999C106.667 43.9999 213.333 7.99994 320 7.99994C426.667 7.99994 533.333 43.9999 640 43.9999C746.667 43.9999 853.333 7.99994 960 7.99994C1066.67 7.99994 1173.33 43.9999 1280 43.9999C1386.67 43.9999 1440 19.0266 1440 9.01329V100H0V43.9999Z"
-                    class="fill-current text-indigo-900"></path>
+
+        <div class="bg-indigo-950 w-full">
+            <svg class="h-24 w-full" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320" preserveAspectRatio="none">
+                <path class="text-indigo-900 fill-current" fill-opacity="0.99"
+                    d="M0,288L60,245.3C120,203,240,117,360,112C480,107,600,181,720,229.3C840,277,960,299,1080,256C1200,213,1320,107,1380,53.3L1440,0L1440,320L1380,320C1320,320,1200,320,1080,320C960,320,840,320,720,320C600,320,480,320,360,320C240,320,120,320,60,320L0,320Z"></path>
             </svg>
         </div>
-        <div class="bg-indigo-900 w-full">
+
+        <div class="bg-indigo-900 py-24 w-full">
             <div class="mx-auto w-2/4 mb-5 lg:mb-10">
                 <h2 class="text-2xl lg:text-5xl mb-3">Projects</h1>
                 <div class="flex justify-center">
