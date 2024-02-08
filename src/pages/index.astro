@@ -60,28 +60,28 @@ const aboutme = `I'm an IT engineer who loves technology and enjoys messing with
         <div />
     </header>
     <main class="flex flex-col justify-center items-center h-full">
-        <div class="bg-blue-950 flex justify-around align-center w-full py-24">
+        <div class="bg-blue-950 flex justify-around align-center w-full py-24 xl:py-40">
             <div />
             <div class="ml-12 md:ml-0 self-center">
-                <h1 class="text-5xl lg:text-9xl">Rodrigo</h1>
-                <h1 class="text-5xl lg:text-9xl">Fernández</h1>
+                <h1 class="text-4xl lg:text-9xl">Rodrigo</h1>
+                <h1 class="text-4xl lg:text-9xl">Fernández</h1>
             </div>
             <div />
-            <div class="ml-12 min-h-36 min-w-36 md:ml-0 md:shrink-0">
+            <div class="ml-12 min-h-24 min-w-auto md:ml-0 md:shrink-0">
                 <img src={profile.src} class="off-screen-right transition-all duration-500 w-2/3 lg:w-full h-auto max-w-xs lg:max-w-sm rounded-md" id="profile-photo"/>
             </div>
             <div />
         </div>
 
         <div class="bg-blue-950 w-full">
-            <svg class="h-24 w-full" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320" preserveAspectRatio="none">
+            <svg class="h-24 xl:h-72 w-full" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320" preserveAspectRatio="none">
                 <path class="text-blue-900 fill-current" fill-opacity="0.99"
                     d="M0,288L60,245.3C120,203,240,117,360,112C480,107,600,181,720,229.3C840,277,960,299,1080,256C1200,213,1320,107,1380,53.3L1440,0L1440,320L1380,320C1320,320,1200,320,1080,320C960,320,840,320,720,320C600,320,480,320,360,320C240,320,120,320,60,320L0,320Z"></path>
             </svg>
         </div>
 
         <div class="flex flex-col justify-center items-start">
-            <div class="bg-blue-900 py-24 w-full">
+            <div class="bg-blue-900 pt-24 xl:pt-40 pb-24 w-full">
                 <Section title={title1} src={analysis.src} text={p1} pclass="mx-auto w-2/3" />
             </div>
 
