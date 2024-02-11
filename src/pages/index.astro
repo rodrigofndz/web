@@ -3,7 +3,8 @@ import Layout from "../layouts/Layout.astro";
 import Section from "../components/Section.astro";
 import SkillList from "../components/SkillList.astro";
 
-import mail from '../assets/mail.svg';
+// import mail from '../assets/mail.svg';
+import mail from '../assets/mail.png';
 import github from '../assets/github-mark.png';
 import linkedin from '../assets/linkedin.png';
 import profile from '../assets/profile-photo.jpg';
@@ -47,14 +48,14 @@ const aboutme = `I'm an IT engineer who loves technology and enjoys messing with
         <div class="xl:w-3/5" />
         <div class="flex items-center overflow-hidden h-full">
             <p class="mr-2 text-center text-black font-semibold">{email}</p>
-            <a href="mailto:rodrigo.fernandez@rodfer.me" class="w-auto h-auto mx-2">
-                <img src={mail.src} class="min-w-3 min-h-3  max-h-20 md:max-h-20 flex-shrink-0"/>
+            <a href="mailto:rodrigo.fernandez@rodfer.me" class="h-full mx-2">
+                <img src={mail.src} class="min-w-3 min-h-3 h-full w-auto flex-shrink-0"/>
             </a>
-            <a href="https://github.com/rodrigofndz" class="w-auto h-auto mx-2">
-                <img src={github.src} class="min-w-3 min-h-3  max-h-6 md:max-h-8 flex-shrink-0"/>
+            <a href="https://github.com/rodrigofndz" class="h-full mx-2">
+                <img src={github.src} class="min-w-3 min-h-3 h-full w-auto flex-shrink-0"/>
             </a>
-            <a href="https://www.linkedin.com/in/rodrigo-fernandez-sanchez-124299232/" class="w-auto h-auto ml-2 mr-1">
-                <img src={linkedin.src} class="min-w-3 min-h-3  max-h-6 md:max-h-8 flex-shrink-0"/>
+            <a href="https://www.linkedin.com/in/rodrigo-fernandez-sanchez-124299232/" class="h-full ml-2 mr-1">
+                <img src={linkedin.src} class="min-w-3 min-h-3 h-full w-auto flex-shrink-0"/>
             </a>
         </div>
         <div />
