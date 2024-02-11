@@ -10,7 +10,7 @@ const { title } = Astro.props;
 <html lang="en">
 	<head>
 		<meta charset="UTF-8" />
-		<meta name="description" content="Astro description">
+		<meta name="description" content="Rodrigo Fernández freelance website.">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<meta name="generator" content={Astro.generator} />
@@ -21,7 +21,7 @@ const { title } = Astro.props;
 	</body>
 
 	<script>
-		document.addEventListener('DOMContentLoaded', () => {
+		window.onload = () => {
 			const prof = document.getElementById('profile-photo');
 			prof.classList.remove('off-screen-right');
 			prof.classList.add('on-screen-right');
@@ -33,8 +33,8 @@ const { title } = Astro.props;
             		image.classList.add('on-screen-left');
 				}, (index + 1) * 500);
 			});
-		});
-		</script>
+		};
+	</script>
 </html>
 <style is:global>
 	@font-face {
@@ -53,12 +53,6 @@ const { title } = Astro.props;
 		padding: 0;
 		color: rgb(235 235 209);
 	}
-	/* .gradient {
-        width: 100%;
-        height: 100%;
-        background: linear-gradient(334deg, #6b97f7 60%, #7525e2, #f7137e);
-        background-size: 180% 180%;
-    } */
 	code {
 		font-family: Menlo, Monaco, Lucida Console, Liberation Mono, DejaVu Sans Mono,
 			Bitstream Vera Sans Mono, Courier New, monospace;
@@ -69,7 +63,7 @@ const { title } = Astro.props;
 	}
 
 	.off-screen-right {
-		transform: translateX(250%);
+		transform: translateX(50%);
 		opacity: 0;
 	}
 
@@ -79,11 +73,11 @@ const { title } = Astro.props;
 	}
 
 	.sliding-image {
-    	transition: all 0.5s ease-in-out;
+    	transition: all 0.8s ease-in-out;
 	}
 
 	.off-screen-left {
-		transform: translateX(-250%);
+		transform: translateX(-25%);
 		opacity: 0;
 	}
 
