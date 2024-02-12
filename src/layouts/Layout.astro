@@ -13,6 +13,10 @@ const { title } = Astro.props;
 		<meta name="description" content="Rodrigo Fernández freelance website.">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<link
+			rel="stylesheet"
+			href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
+		/>
 		<meta name="generator" content={Astro.generator} />
 		<title>{title}</title>
 	</head>
@@ -23,8 +27,8 @@ const { title } = Astro.props;
 	<script>
 		window.onload = () => {
 			const prof = document.getElementById('profile-photo');
-			prof.classList.remove('off-screen-right');
-			prof.classList.add('on-screen-right');
+			prof.classList.remove('off-screen');
+			prof.classList.add('on-screen');
 
 			const images = document.querySelectorAll('.sliding-image');
 			images.forEach((image, index) => {
@@ -51,7 +55,7 @@ const { title } = Astro.props;
 		font-family: 'Arvo', sans-serif;
 		margin: 0;
 		padding: 0;
-		color: rgb(235 235 209);
+		/* color: rgb(235 235 209); */
 	}
 	code {
 		font-family: Menlo, Monaco, Lucida Console, Liberation Mono, DejaVu Sans Mono,
@@ -62,13 +66,11 @@ const { title } = Astro.props;
 		background-color: rgb(235 235 209);
 	}
 
-	.off-screen-right {
-		transform: translateX(50%);
+	.off-screen {
 		opacity: 0;
 	}
 
-	.on-screen-right {
-		transform: translateX(0);
+	.on-screent {
 		opacity: 100;
 	}
 
