@@ -23,8 +23,8 @@ const { title } = Astro.props;
 	<script>
 		window.onload = () => {
 			const prof = document.getElementById('profile-photo');
-			prof.classList.remove('off-screen-right');
-			prof.classList.add('on-screen-right');
+			prof.classList.remove('off-screen');
+			prof.classList.add('on-screen');
 
 			const images = document.querySelectorAll('.sliding-image');
 			images.forEach((image, index) => {
@@ -62,13 +62,11 @@ const { title } = Astro.props;
 		background-color: rgb(235 235 209);
 	}
 
-	.off-screen-right {
-		transform: translateX(50%);
+	.off-screen {
 		opacity: 0;
 	}
 
-	.on-screen-right {
-		transform: translateX(0);
+	.on-screent {
 		opacity: 100;
 	}
 
