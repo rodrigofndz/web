@@ -1,7 +1,8 @@
 ---
-import Layout from "../layouts/Layout.astro";
-import Section from "../components/Section.astro";
-import SkillList from "../components/SkillList.astro";
+import '../styles/global.css';
+import Layout from '../layouts/Layout.astro';
+import Section from '../components/Section.astro';
+import SkillList from '../components/SkillList.astro';
 
 // import mail from '../assets/mail.svg';
 import mail from '../assets/mail.png';
@@ -18,91 +19,130 @@ const title1 = 'Unlock the Power of Technology';
 const title2 = 'Transform Your Digital Vision into Reality';
 const title3 = 'Stay Ahead of the Technology Curve';
 
-const p1 = `Are you looking for a skilled IT professional to take your business to new heights? 
-                I'm here to help. With my extensive experience in web development, software 
-                engineering, and more, I've got you covered. Together, we can harness the power of 
-                technology to drive growth, streamline operations, and exceed your business goals. 
-                Take the first step towards success by partnering with me, your top-notch IT 
+const p1 = `Are you looking for a skilled IT professional to take your business to new heights?
+                I'm here to help. With my extensive experience in web development, software
+                engineering, and more, I've got you covered. Together, we can harness the power of
+                technology to drive growth, streamline operations, and exceed your business goals.
+                Take the first step towards success by partnering with me, your top-notch IT
                 engineer.`;
-const p2 = `In today's digital landscape, having a strong online presence is crucial. 
-                As an IT engineer, I specialize in turning your digital vision into a reality. 
-                Whether you need a stunning website, a cutting-edge mobile app, or custom software 
-                solutions, I have the skills and expertise to deliver results. I work closely with 
-                you to understand your unique requirements and create tailor-made solutions that 
-                drive engagement, enhance user experience, and boost your brand's visibility. Get 
-                ready to stand out from the competition with me.`
-const p3 = `Technology is constantly evolving, and staying ahead of the curve is essential for 
-                business success. I stay up-to-date with the latest industry trends and technologies. 
-                I am adept at implementing innovative solutions that give your business a competitive 
-                edge. Whether it's adopting cloud computing or optimizing cybersecurity measures. I 
-                have the knowledge and expertise to propel your business forward. Don't let technology 
+const p2 = `In today's digital landscape, having a strong online presence is crucial.
+                As an IT engineer, I specialize in turning your digital vision into a reality.
+                Whether you need a stunning website, a cutting-edge mobile app, or custom software
+                solutions, I have the skills and expertise to deliver results. I work closely with
+                you to understand your unique requirements and create tailor-made solutions that
+                drive engagement, enhance user experience, and boost your brand's visibility. Get
+                ready to stand out from the competition with me.`;
+const p3 = `Technology is constantly evolving, and staying ahead of the curve is essential for
+                business success. I stay up-to-date with the latest industry trends and technologies.
+                I am adept at implementing innovative solutions that give your business a competitive
+                edge. Whether it's adopting cloud computing or optimizing cybersecurity measures. I
+                have the knowledge and expertise to propel your business forward. Don't let technology
                 hold you back and stay ahead in the digital era.`;
-const aboutme = `I'm an IT engineer who loves technology and enjoys messing with new stuff. Graduated 
-                    in 2018 I keep working in the field and learning to improve myself. I consider myself 
+const aboutme = `I'm an IT engineer who loves technology and enjoys messing with new stuff. Graduated
+                    in 2018 I keep working in the field and learning to improve myself. I consider myself
                     a backend developer but evrything is a web app, so here I am.`;
 ---
 
-<Layout title="Rodrigo Fernández">
-    
-    <header class="text-base color-beige flex justify-between h-10 py-1">
-        <div class="xl:w-3/5" />
-        <div class="flex items-center overflow-hidden h-full">
-            <div class="mr-2 hidden md:block">
-                <p class="text-center text-black font-semibold">{email}</p>
-            </div>
-            <a href="mailto:rodrigo.fernandez@rodfer.me" class="h-full mx-2">
-                <img src={mail.src} class="min-w-3 min-h-3 h-full w-auto flex-shrink-0"/>
-            </a>
-            <a href="https://github.com/rodrigofndz" class="h-full mx-2">
-                <img src={github.src} class="min-w-3 min-h-3 h-full w-auto flex-shrink-0"/>
-            </a>
-            <a href="https://www.linkedin.com/in/rodrigo-fernandez-sanchez-124299232/" class="h-full ml-2 mr-1">
-                <img src={linkedin.src} class="min-w-3 min-h-3 h-full w-auto flex-shrink-0"/>
-            </a>
-        </div>
-        <div />
-    </header>
-    <main class="flex flex-col justify-center items-center">
-        <div class="bg-blue-950 flex justify-around align-center h-screen w-full py-24 xl:py-72">
-            <div></div>
-            <div class="animate__animated animate__fadeInLeft ml-12 md:ml-0 self-center text-gray-100">
-                <h1 class="text-3xl md:text-5xl lg:text-9xl">Rodrigo</h1>
-                <h1 class="text-3xl md:text-5xl lg:text-9xl">Fernández</h1>
-            </div>
-            <div></div>
-            <div class="flex justify-center ml-6 min-h-24 min-w-auto md:ml-0 md:shrink-0">
-                <img src={profile.src} class="animate__animated animate__fadeInRight w-full h-auto max-w-24 sm:max-w-xs md:max-w-64 rounded-md object-contain flex-shrink-0 mr-1 md:mr-0" id="profile-photo"/>
-            </div>
-            <div></div>
-        </div>
+<Layout title='Rodrigo Fernández'>
+  <header class='text-base color-beige flex justify-between h-10 py-1'>
+    <div class='xl:w-3/5'></div>
+    <div class='flex items-center overflow-hidden h-full'>
+      <div class='mr-2 hidden md:block'>
+        <p class='text-center text-black font-semibold'>{email}</p>
+      </div>
+      <a href='mailto:rodrigo.fernandez@rodfer.me' class='h-full mx-2'>
+        <img
+          src={mail.src}
+          class='min-w-3 min-h-3 h-full w-auto flex-shrink-0'
+        />
+      </a>
+      <a href='https://github.com/rodrigofndz' class='h-full mx-2'>
+        <img
+          src={github.src}
+          class='min-w-3 min-h-3 h-full w-auto flex-shrink-0'
+        />
+      </a>
+      <a
+        href='https://www.linkedin.com/in/rodrigo-fernandez-sanchez-124299232/'
+        class='h-full ml-2 mr-1'
+      >
+        <img
+          src={linkedin.src}
+          class='min-w-3 min-h-3 h-full w-auto flex-shrink-0'
+        />
+      </a>
+    </div>
+    <div></div>
+  </header>
+  <main class='flex flex-col justify-center items-center'>
+    <div
+      class='bg-blue-950 flex justify-around align-center h-screen w-full py-24 xl:py-72'
+    >
+      <div></div>
+      <div
+        class='animate__animated animate__fadeInLeft ml-12 md:ml-0 self-center text-gray-100'
+      >
+        <h1 class='text-3xl md:text-5xl lg:text-9xl'>Rodrigo</h1>
+        <h1 class='text-3xl md:text-5xl lg:text-9xl'>Fernández</h1>
+      </div>
+      <div></div>
+      <div
+        class='flex justify-center ml-6 min-h-24 min-w-auto md:ml-0 md:shrink-0'
+      >
+        <img
+          src={profile.src}
+          class='animate__animated animate__fadeInRight w-full h-auto max-w-24 sm:max-w-xs md:max-w-64 rounded-md object-contain flex-shrink-0 mr-1 md:mr-0'
+          id='profile-photo'
+        />
+      </div>
+      <div></div>
+    </div>
 
-        <div class="flex flex-col justify-center items-start">
-            <div class="animate__animated animate__fadeInUp pt-24 xl:pt-72 pb-24 w-full">
-                <Section title={title1} src={analysis.src} text={p1} pclass="mx-auto w-3/5" />
-            </div>
+    <div class='flex flex-col justify-center items-start'>
+      <div
+        class='animate__animated animate__fadeInUp pt-24 xl:pt-72 pb-24 w-full'
+      >
+        <Section
+          title={title1}
+          src={analysis.src}
+          text={p1}
+          pclass='mx-auto w-3/5'
+        />
+      </div>
 
-            <div class="py-24 w-full">
-                <Section title={title2} src={electricity.src} text={p2} pclass="mx-auto w-3/5" />
-            </div>
+      <div class='py-24 w-full'>
+        <Section
+          title={title2}
+          src={electricity.src}
+          text={p2}
+          pclass='mx-auto w-3/5'
+        />
+      </div>
 
-            <div class="py-24 w-full">
-                <Section title={title3} src={projections.src} text={p3} pclass="mx-auto w-3/5" />
-            </div>
-        </div>
+      <div class='py-24 w-full'>
+        <Section
+          title={title3}
+          src={projections.src}
+          text={p3}
+          pclass='mx-auto w-3/5'
+        />
+      </div>
+    </div>
 
-        <div class="w-full py-24">
-            <div class={"mx-auto w-3/5 my-5 lg:my-10"}>
-                <h2 class="text-4xl lg:text-7xl font-semibold mb-3">About me</h1>
-                <p class="text-lg lg:text-2xl">{aboutme}</p>
-            </div>
-        </div>
-    </main>
+    <div class='w-full py-24'>
+      <div class={'mx-auto w-3/5 my-5 lg:my-10'}>
+        <h2 class='text-4xl lg:text-7xl font-semibold mb-3'>About me</h2>
+        <p class='text-lg lg:text-2xl'>{aboutme}</p>
+      </div>
+    </div>
+  </main>
 
-    <footer class="color-beige text-center items-center py-2">
-        <p id="copyright" class ="text-black font-semibold"></p>
-    </footer>
+  <footer class='color-beige text-center items-center py-2'>
+    <p id='copyright' class='text-black font-semibold'></p>
+  </footer>
 </Layout>
 
 <script>
-    document.getElementById('copyright').textContent = `© ${new Date().getFullYear()} Rodrigo Fernández. All rights reserved.`;
+  document.getElementById('copyright').textContent =
+    `© ${new Date().getFullYear()} Rodrigo Fernández. All rights reserved.`;
 </script>

@@ -1,95 +1,105 @@
 ---
 export interface Props {
-	title: string;
+  title: string;
 }
 
 const { title } = Astro.props;
 ---
 
-<!DOCTYPE html>
-<html lang="en">
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="description" content="Rodrigo Fernández freelance website.">
-		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link
-			rel="stylesheet"
-			href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
-		/>
-		<meta name="generator" content={Astro.generator} />
-		<title>{title}</title>
-	</head>
-	<body>
-		<slot />
-	</body>
+<!doctype html>
+<html lang='en'>
+  <head>
+    <meta charset='UTF-8' />
+    <meta name='description' content='Rodrigo Fernández freelance website.' />
+    <meta name='viewport' content='width=device-width, initial-scale=1.0' />
+    <link rel='icon' type='image/svg+xml' href='/favicon.svg' />
+    <link
+      rel='stylesheet'
+      href='https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css'
+    />
+    <meta name='generator' content={Astro.generator} />
+    <title>{title}</title>
+  </head>
+  <body>
+    <slot />
+  </body>
 
-	<script>
-		window.onload = () => {
-			const prof = document.getElementById('profile-photo');
-			prof.classList.remove('off-screen');
-			prof.classList.add('on-screen');
+  <script>
+    window.onload = () => {
+      const prof = document.getElementById('profile-photo');
+      prof.classList.remove('off-screen');
+      prof.classList.add('on-screen');
 
-			const images = document.querySelectorAll('.sliding-image');
-			images.forEach((image, index) => {
-				setTimeout(() => {
-					image.classList.remove('off-screen-left');
-            		image.classList.add('on-screen-left');
-				}, (index + 1) * 500);
-			});
-		};
-	</script>
+      const images = document.querySelectorAll('.sliding-image');
+      images.forEach((image, index) => {
+        setTimeout(
+          () => {
+            image.classList.remove('off-screen-left');
+            image.classList.add('on-screen-left');
+          },
+          (index + 1) * 500
+        );
+      });
+    };
+  </script>
 </html>
 <style is:global>
-	@font-face {
-        font-family: 'Arvo';
-        src: url('/fonts/Arvo-Regular.ttf') format('ttf');
-        font-weight: normal;
-        font-style: normal;
-        font-display: swap;
-    }
-	html {
-		font-family: system-ui, sans-serif;
-	}
-	body {
-		font-family: 'Arvo', sans-serif;
-		margin: 0;
-		padding: 0;
-		/* color: rgb(235 235 209); */
-	}
-	code {
-		font-family: Menlo, Monaco, Lucida Console, Liberation Mono, DejaVu Sans Mono,
-			Bitstream Vera Sans Mono, Courier New, monospace;
-	}
+  @font-face {
+    font-family: 'Arvo';
+    src: url('/fonts/Arvo-Regular.ttf') format('ttf');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+  }
+  html {
+    font-family: system-ui, sans-serif;
+  }
+  body {
+    font-family: 'Arvo', sans-serif;
+    margin: 0;
+    padding: 0;
+    /* color: rgb(235 235 209); */
+  }
+  code {
+    font-family:
+      Menlo,
+      Monaco,
+      Lucida Console,
+      Liberation Mono,
+      DejaVu Sans Mono,
+      Bitstream Vera Sans Mono,
+      Courier New,
+      monospace;
+  }
 
-	.color-beige{
-		background-color: rgb(235 235 209);
-	}
+  .color-beige {
+    background-color: rgb(235 235 209);
+  }
 
-	.off-screen {
-		opacity: 0;
-	}
+  .off-screen {
+    opacity: 0;
+  }
 
-	.on-screent {
-		opacity: 100;
-	}
+  .on-screent {
+    opacity: 100;
+  }
 
-	.sliding-image {
-    	transition: all 0.8s ease-in-out;
-	}
+  .sliding-image {
+    transition: all 0.8s ease-in-out;
+  }
 
-	.off-screen-left {
-		transform: translateX(-25%);
-		opacity: 0;
-	}
+  .off-screen-left {
+    transform: translateX(-25%);
+    opacity: 0;
+  }
 
-	.on-screen-left {
-		transform: translateX(0);
-		opacity: 100;
-	}
+  .on-screen-left {
+    transform: translateX(0);
+    opacity: 100;
+  }
 
-	.icon:hover {
-		transform: scale(1.1); /* Adjust the scale value to your liking */
-		transition: transform 0.3s ease; /* Smooth transition for the scaling effect */
-	}
+  .icon:hover {
+    transform: scale(1.1); /* Adjust the scale value to your liking */
+    transition: transform 0.3s ease; /* Smooth transition for the scaling effect */
+  }
 </style>
