@@ -1,0 +1,221 @@
+---
+import { getRelativeLocaleUrl } from 'astro:i18n';
+import { useTranslations, getLang } from '../i18n/utils';
+import { languages } from '../i18n/ui';
+
+const lang = getLang(Astro.currentLocale);
+const t = useTranslations(lang).nav;
+
+const links = [
+  { label: t.services, href: '#services' },
+  { label: t.about, href: '#about' },
+  { label: t.contact, href: '#contact' },
+];
+
+const langSwitcher = [
+  { code: 'en', label: 'EN', url: getRelativeLocaleUrl('en', '/') },
+  { code: 'es', label: 'ES', url: getRelativeLocaleUrl('es', '/') },
+  { code: 'ca', label: 'CA', url: getRelativeLocaleUrl('ca', '/') },
+] as const;
+---
+
+<header class="fixed top-0 inset-x-0 z-50 border-b border-[--color-accent]/20 bg-[--color-bg]/80 backdrop-blur-sm">
+  <nav class="mx-auto flex max-w-5xl items-center justify-between px-6 py-4">
+    <a
+      id="nav-name"
+      href={getRelativeLocaleUrl(lang, '/')}
+      class="text-sm font-semibold tracking-tight text-[--color-text] opacity-0 transition-opacity duration-300"
+    >
+      Rodrigo Fernández
+    </a>
+
+    <div class="flex items-center gap-3">
+      <!-- Desktop links -->
+      <ul class="hidden md:flex items-center gap-8">
+        {links.map(({ label, href }) => (
+          <li>
+            <a href={href} class="text-sm text-[--color-muted] transition-colors hover:text-[--color-accent]">
+              {label}
+            </a>
+          </li>
+        ))}
+      </ul>
+
+      <!-- Language switcher (desktop) -->
+      <div class="hidden md:block border-l border-[--color-border] pl-3">
+        <div class="relative">
+          <button
+            id="lang-toggle"
+            aria-haspopup="true"
+            aria-expanded="false"
+            class="flex items-center gap-1 rounded px-2 py-1 text-xs font-medium text-[--color-accent] transition-colors hover:bg-[--color-accent]/10"
+          >
+            {lang.toUpperCase()}
+            <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="6 9 12 15 18 9"/>
+            </svg>
+          </button>
+          <div
+            id="lang-dropdown"
+            class="absolute left-1/2 -translate-x-1/2 top-full mt-3 hidden min-w-[4rem] rounded-lg bg-[--color-surface] py-2 shadow-xl ring-1 ring-[--color-border]/60 z-50"
+          >
+            {langSwitcher.filter(({ code }) => code !== lang).map(({ code, label, url }) => (
+              <a
+                href={url}
+                data-lang={code}
+                class="lang-switch block px-4 py-2 text-xs font-medium text-[--color-muted] transition-colors hover:bg-[--color-accent]/10 hover:text-[--color-text]"
+              >
+                {label}
+              </a>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      <!-- Theme toggle -->
+      <button
+        id="theme-toggle"
+        aria-label="Toggle theme"
+        class="rounded-lg border border-[--color-border] p-2 text-[--color-muted] transition-colors hover:border-[--color-muted] hover:text-[--color-text]"
+      >
+        <svg id="icon-sun" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/>
+        </svg>
+        <svg id="icon-moon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="hidden">
+          <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/>
+        </svg>
+      </button>
+
+      <!-- Hamburger (mobile only) -->
+      <button
+        id="menu-toggle"
+        aria-label="Toggle menu"
+        aria-expanded="false"
+        class="md:hidden rounded-lg border border-[--color-border] p-2 text-[--color-muted] transition-colors hover:border-[--color-muted] hover:text-[--color-text]"
+      >
+        <svg id="icon-menu" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="4" y1="6" x2="20" y2="6"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="18" x2="20" y2="18"/>
+        </svg>
+        <svg id="icon-close" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="hidden">
+          <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+        </svg>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Mobile menu -->
+  <div id="mobile-menu" class="hidden md:hidden border-t border-[--color-border] bg-[--color-bg]">
+    <ul class="flex flex-col px-6 py-4 gap-1">
+      {links.map(({ label, href }) => (
+        <li>
+          <a href={href} class="mobile-link block py-3 text-sm text-[--color-muted] transition-colors hover:text-[--color-accent]">
+            {label}
+          </a>
+        </li>
+      ))}
+    </ul>
+    <!-- Language switcher in mobile menu -->
+    <div class="border-t border-[--color-border] px-6 py-4">
+      <p class="mb-2 text-xs font-medium tracking-wider text-[--color-muted] uppercase">Language</p>
+      <div class="flex items-center gap-2">
+        {langSwitcher.map(({ code, label, url }) => (
+          <a
+            href={url}
+            data-lang={code}
+            class:list={[
+              'lang-switch rounded px-3 py-1.5 text-xs font-medium transition-colors',
+              code === lang
+                ? 'bg-[--color-accent]/10 text-[--color-accent]'
+                : 'text-[--color-muted] hover:text-[--color-text]',
+            ]}
+          >
+            {label}
+          </a>
+        ))}
+      </div>
+    </div>
+  </div>
+</header>
+
+<script>
+  // Nav name visibility — show only when hero h1 is out of view
+  const navName = document.getElementById('nav-name')!;
+  const heroName = document.getElementById('hero-name');
+
+  if (heroName) {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        navName.classList.toggle('opacity-0', entry.isIntersecting);
+        navName.classList.toggle('opacity-100', !entry.isIntersecting);
+      },
+      { threshold: 0.1 }
+    );
+    observer.observe(heroName);
+  }
+
+  // Theme toggle
+  const html = document.documentElement;
+  const themeBtn = document.getElementById('theme-toggle')!;
+  const sun = document.getElementById('icon-sun')!;
+  const moon = document.getElementById('icon-moon')!;
+
+  function applyTheme(theme: string) {
+    html.dataset.theme = theme;
+    localStorage.setItem('theme', theme);
+    sun.classList.toggle('hidden', theme !== 'dark');
+    moon.classList.toggle('hidden', theme === 'dark');
+  }
+
+  applyTheme(html.dataset.theme ?? 'dark');
+  themeBtn.addEventListener('click', () => {
+    applyTheme(html.dataset.theme === 'dark' ? 'light' : 'dark');
+  });
+
+  // Mobile menu toggle
+  const menuBtn = document.getElementById('menu-toggle')!;
+  const mobileMenu = document.getElementById('mobile-menu')!;
+  const iconMenu = document.getElementById('icon-menu')!;
+  const iconClose = document.getElementById('icon-close')!;
+
+  menuBtn.addEventListener('click', () => {
+    const isOpen = !mobileMenu.classList.contains('hidden');
+    mobileMenu.classList.toggle('hidden', isOpen);
+    iconMenu.classList.toggle('hidden', !isOpen);
+    iconClose.classList.toggle('hidden', isOpen);
+    menuBtn.setAttribute('aria-expanded', String(!isOpen));
+  });
+
+  document.querySelectorAll('.mobile-link').forEach((link) => {
+    link.addEventListener('click', () => {
+      mobileMenu.classList.add('hidden');
+      iconMenu.classList.remove('hidden');
+      iconClose.classList.add('hidden');
+      menuBtn.setAttribute('aria-expanded', 'false');
+    });
+  });
+
+  // Language dropdown (desktop)
+  const langToggle = document.getElementById('lang-toggle')!;
+  const langDropdown = document.getElementById('lang-dropdown')!;
+
+  langToggle.addEventListener('click', () => {
+    const isOpen = !langDropdown.classList.contains('hidden');
+    langDropdown.classList.toggle('hidden', isOpen);
+    langToggle.setAttribute('aria-expanded', String(!isOpen));
+  });
+
+  document.addEventListener('click', (e) => {
+    if (!langToggle.contains(e.target as Node) && !langDropdown.contains(e.target as Node)) {
+      langDropdown.classList.add('hidden');
+      langToggle.setAttribute('aria-expanded', 'false');
+    }
+  });
+
+  // Persist manual language selection
+  document.querySelectorAll<HTMLAnchorElement>('.lang-switch').forEach((link) => {
+    link.addEventListener('click', () => {
+      const lang = link.dataset.lang;
+      if (lang) localStorage.setItem('preferred-lang', lang);
+    });
+  });
+</script>

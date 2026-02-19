@@ -1,0 +1,177 @@
+export const languages = {
+  en: 'English',
+  es: 'Español',
+  ca: 'Català',
+} as const;
+
+export type Lang = keyof typeof languages;
+
+export const ui = {
+  en: {
+    meta: {
+      title: 'Rodrigo Fernández — Full-Stack Engineer',
+      description: 'Full-stack software engineer specializing in web, mobile, and backend development.',
+    },
+    nav: {
+      services: 'Services',
+      about: 'About',
+      contact: 'Contact',
+    },
+    hero: {
+      role: 'Full-Stack Software Engineer',
+      tagline: 'I design and build web, mobile, and backend software — from early-stage products to scalable systems.',
+      ctaPrimary: 'Get in touch',
+      ctaSecondary: 'See my work',
+    },
+    services: {
+      label: 'Services',
+      heading: 'What I do',
+      items: [
+        { title: 'Web Design', description: 'Clean, purposeful interfaces that communicate clearly and convert. From wireframes to polished UI.' },
+        { title: 'Frontend Development', description: 'Fast, accessible, responsive web apps. React, Astro, TypeScript — whatever fits the project.' },
+        { title: 'Backend & API', description: 'Robust server-side systems, REST APIs, databases, and cloud infrastructure.' },
+        { title: 'Mobile Development', description: 'Cross-platform mobile apps built with React Native — one codebase, native feel on iOS and Android.' },
+        { title: 'Consulting & Advisory', description: 'Technical strategy, architecture reviews, and team mentoring to help you ship faster and smarter.' },
+      ],
+    },
+    about: {
+      label: 'About',
+      heading: 'Building software that works — and lasts.',
+      bio1: "I'm a full-stack software engineer with a focus on delivering complete, production-ready software. I work across the full spectrum — from design and frontend to backend systems and mobile apps.",
+      bio2: 'I work with startups and small teams who need a reliable technical partner — someone who can own a project from first commit to deployment and beyond.',
+      stack: {
+        languages: 'Languages',
+        frontend: 'Frontend',
+        backend: 'Backend',
+        infrastructure: 'Infrastructure',
+      },
+    },
+    contact: {
+      label: 'Contact',
+      heading: "Let's work together.",
+      description: "Have a project in mind or just want to talk? Send me a message and I'll get back to you within a day or two.",
+      name: 'Name',
+      email: 'Email',
+      message: 'Message',
+      namePlaceholder: 'Your name',
+      emailPlaceholder: 'you@example.com',
+      messagePlaceholder: 'Tell me about your project...',
+      submit: 'Send message',
+      sending: 'Sending...',
+      success: "Message sent! I'll be in touch soon.",
+      error: 'Something went wrong. Please try again or email me directly.',
+    },
+  },
+
+  es: {
+    meta: {
+      title: 'Rodrigo Fernández — Ingeniero Full-Stack',
+      description: 'Ingeniero de software full-stack especializado en desarrollo web, móvil y backend.',
+    },
+    nav: {
+      services: 'Servicios',
+      about: 'Sobre mí',
+      contact: 'Contacto',
+    },
+    hero: {
+      role: 'Ingeniero de Software Full-Stack',
+      tagline: 'Diseño y desarrollo software web, móvil y backend — desde productos en etapas tempranas hasta sistemas escalables.',
+      ctaPrimary: 'Hablemos',
+      ctaSecondary: 'Ver mis servicios',
+    },
+    services: {
+      label: 'Servicios',
+      heading: 'Lo que hago',
+      items: [
+        { title: 'Diseño Web', description: 'Interfaces claras y con propósito que comunican eficazmente y convierten. Desde wireframes hasta UI pulida.' },
+        { title: 'Desarrollo Frontend', description: 'Aplicaciones web rápidas, accesibles y responsivas. React, Astro, TypeScript — lo que mejor se adapte.' },
+        { title: 'Backend y API', description: 'Sistemas robustos del lado del servidor, APIs REST, bases de datos e infraestructura en la nube.' },
+        { title: 'Desarrollo Móvil', description: 'Apps móviles multiplataforma con React Native — un solo código, experiencia nativa en iOS y Android.' },
+        { title: 'Consultoría', description: 'Estrategia técnica, revisión de arquitectura y mentoría para que entregues más rápido y con mayor confianza.' },
+      ],
+    },
+    about: {
+      label: 'Sobre mí',
+      heading: 'Construyendo software que funciona — y perdura.',
+      bio1: 'Soy un ingeniero de software full-stack con enfoque en entregar software completo y listo para producción. Trabajo en todo el espectro — desde diseño y frontend hasta sistemas backend y aplicaciones móviles.',
+      bio2: 'Trabajo con startups y equipos pequeños que necesitan un socio técnico de confianza — alguien que pueda gestionar un proyecto desde el primer commit hasta el despliegue y más allá.',
+      stack: {
+        languages: 'Lenguajes',
+        frontend: 'Frontend',
+        backend: 'Backend',
+        infrastructure: 'Infraestructura',
+      },
+    },
+    contact: {
+      label: 'Contacto',
+      heading: 'Trabajemos juntos.',
+      description: '¿Tienes un proyecto en mente o simplemente quieres charlar? Envíame un mensaje y te respondo en uno o dos días.',
+      name: 'Nombre',
+      email: 'Correo electrónico',
+      message: 'Mensaje',
+      namePlaceholder: 'Tu nombre',
+      emailPlaceholder: 'tu@ejemplo.com',
+      messagePlaceholder: 'Cuéntame sobre tu proyecto...',
+      submit: 'Enviar mensaje',
+      sending: 'Enviando...',
+      success: '¡Mensaje enviado! Me pondré en contacto pronto.',
+      error: 'Algo salió mal. Inténtalo de nuevo o escríbeme directamente.',
+    },
+  },
+
+  ca: {
+    meta: {
+      title: 'Rodrigo Fernández — Enginyer Full-Stack',
+      description: 'Enginyer de software full-stack especialitzat en desenvolupament web, mòbil i backend.',
+    },
+    nav: {
+      services: 'Serveis',
+      about: 'Sobre mi',
+      contact: 'Contacte',
+    },
+    hero: {
+      role: 'Enginyer de Software Full-Stack',
+      tagline: 'Dissenyo i desenvolupo programari web, mòbil i backend — des de productes en fases inicials fins a sistemes escalables.',
+      ctaPrimary: "Parlem-ne",
+      ctaSecondary: 'Veure els meus serveis',
+    },
+    services: {
+      label: 'Serveis',
+      heading: 'El que faig',
+      items: [
+        { title: 'Disseny Web', description: 'Interfícies netes i amb propòsit que comuniquen clarament i converteixen. Des de wireframes fins a UI polida.' },
+        { title: 'Desenvolupament Frontend', description: 'Aplicacions web ràpides, accessibles i responsives. React, Astro, TypeScript — el que millor s\'adapti.' },
+        { title: 'Backend i API', description: 'Sistemes robustos del costat del servidor, APIs REST, bases de dades i infraestructura al núvol.' },
+        { title: 'Desenvolupament Mòbil', description: 'Apps mòbils multiplataforma amb React Native — un sol codi, experiència nativa a iOS i Android.' },
+        { title: 'Consultoria', description: "Estratègia tècnica, revisió d'arquitectura i mentoria perquè puguis lliurar més ràpid i amb més confiança." },
+      ],
+    },
+    about: {
+      label: 'Sobre mi',
+      heading: 'Construint programari que funciona — i perdura.',
+      bio1: "Sóc un enginyer de software full-stack amb el focus en lliurar programari complet i llest per a producció. Treballo a tot l'espectre — des de disseny i frontend fins a sistemes backend i aplicacions mòbils.",
+      bio2: "Treballo amb startups i equips petits que necessiten un soci tècnic de confiança — algú que pugui gestionar un projecte des del primer commit fins al desplegament i més enllà.",
+      stack: {
+        languages: 'Llenguatges',
+        frontend: 'Frontend',
+        backend: 'Backend',
+        infrastructure: 'Infraestructura',
+      },
+    },
+    contact: {
+      label: 'Contacte',
+      heading: 'Treballem junts.',
+      description: "Tens un projecte en ment o simplement vols xerrar? Envia'm un missatge i et responc en un o dos dies.",
+      name: 'Nom',
+      email: 'Correu electrònic',
+      message: 'Missatge',
+      namePlaceholder: 'El teu nom',
+      emailPlaceholder: 'tu@exemple.com',
+      messagePlaceholder: 'Explica\'m el teu projecte...',
+      submit: 'Enviar missatge',
+      sending: 'Enviant...',
+      success: "Missatge enviat! Em posaré en contacte aviat.",
+      error: "Alguna cosa ha anat malament. Torna-ho a intentar o escriu-me directament.",
+    },
+  },
+} as const;

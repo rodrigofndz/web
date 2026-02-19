@@ -1,0 +1,21 @@
+---
+import BaseLayout from './BaseLayout.astro';
+import Nav from '../components/Nav.astro';
+import Hero from '../components/Hero.astro';
+import Services from '../components/Services.astro';
+import About from '../components/About.astro';
+import Contact from '../components/Contact.astro';
+---
+
+<BaseLayout>
+  <Nav />
+  <main>
+    <Hero />
+    <Services />
+    <About />
+    <Contact />
+  </main>
+  <footer class="border-t border-[--color-accent]/20 px-6 py-6 text-center text-sm text-[--color-muted]">
+    © {new Date().getFullYear()} <span class="text-[--color-accent]">Rodrigo Fernández</span>
+  </footer>
+</BaseLayout>

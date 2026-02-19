@@ -1,0 +1,58 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: 'Inter', system-ui, sans-serif;
+}
+
+/* Dark theme (default) */
+:root {
+  --color-bg: #080810;
+  --color-surface: #0f0f1a;
+  --color-border: #1e1e2e;
+  --color-muted: #6b7280;
+  --color-text: #f1f1f8;
+  --color-accent: #a5b4fc;
+  --color-accent-fg: #1e1b4b;
+  --color-glow: rgba(99, 102, 241, 0.12);
+}
+
+/* Light theme */
+:root[data-theme="light"] {
+  --color-bg: #f8f8ff;
+  --color-surface: #eeeef8;
+  --color-border: #d1d1e0;
+  --color-muted: #6b7280;
+  --color-text: #111128;
+  --color-accent: #4f46e5;
+  --color-accent-fg: #ffffff;
+  --color-glow: rgba(99, 102, 241, 0.07);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+/* Gradient text utility — dark mode */
+.gradient-text {
+  background: linear-gradient(135deg, #f1f1f8 20%, #c7d2fe 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  padding-bottom: 0.15em;
+}
+
+/* Gradient text utility — light mode */
+:root[data-theme="light"] .gradient-text {
+  background: linear-gradient(135deg, #111128 20%, #4f46e5 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}

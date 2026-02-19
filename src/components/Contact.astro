@@ -1,0 +1,130 @@
+---
+import { useTranslations, getLang } from '../i18n/utils';
+const lang = getLang(Astro.currentLocale);
+const t = useTranslations(lang).contact;
+---
+
+<section id="contact" class="px-6 py-16 md:py-32">
+  <div class="mx-auto max-w-5xl">
+    <h2 class="mb-4 text-sm font-medium tracking-widest text-[--color-accent] uppercase">
+      {t.label}
+    </h2>
+    <div class="grid gap-10 lg:gap-16 lg:grid-cols-2">
+      <div>
+        <p class="gradient-text mb-6 text-2xl font-bold tracking-tight md:text-3xl">
+          {t.heading}
+        </p>
+        <p class="text-[--color-muted] leading-relaxed">
+          {t.description}
+        </p>
+      </div>
+
+      <form
+        id="contact-form"
+        class="flex flex-col gap-4"
+        data-msg-sending={t.sending}
+        data-msg-success={t.success}
+        data-msg-error={t.error}
+        data-btn-send={t.submit}
+      >
+        <div>
+          <label for="name" class="mb-1.5 block text-xs font-medium tracking-wider text-[--color-accent]/80 uppercase">
+            {t.name}
+          </label>
+          <input
+            id="name"
+            name="name"
+            type="text"
+            required
+            class="w-full rounded-lg border border-[--color-border] bg-[--color-surface] px-4 py-3 text-sm text-[--color-text] outline-none transition-colors placeholder:text-[--color-muted]/50 focus:border-[--color-accent] focus:ring-1 focus:ring-[--color-accent]/30"
+            placeholder={t.namePlaceholder}
+          />
+        </div>
+        <div>
+          <label for="email" class="mb-1.5 block text-xs font-medium tracking-wider text-[--color-accent]/80 uppercase">
+            {t.email}
+          </label>
+          <input
+            id="email"
+            name="email"
+            type="email"
+            required
+            class="w-full rounded-lg border border-[--color-border] bg-[--color-surface] px-4 py-3 text-sm text-[--color-text] outline-none transition-colors placeholder:text-[--color-muted]/50 focus:border-[--color-accent] focus:ring-1 focus:ring-[--color-accent]/30"
+            placeholder={t.emailPlaceholder}
+          />
+        </div>
+        <div>
+          <label for="message" class="mb-1.5 block text-xs font-medium tracking-wider text-[--color-accent]/80 uppercase">
+            {t.message}
+          </label>
+          <textarea
+            id="message"
+            name="message"
+            rows="5"
+            required
+            class="w-full resize-none rounded-lg border border-[--color-border] bg-[--color-surface] px-4 py-3 text-sm text-[--color-text] outline-none transition-colors placeholder:text-[--color-muted]/50 focus:border-[--color-accent] focus:ring-1 focus:ring-[--color-accent]/30"
+            placeholder={t.messagePlaceholder}
+          ></textarea>
+        </div>
+
+        <p id="form-status" class="hidden text-sm"></p>
+
+        <button
+          type="submit"
+          class="rounded-lg bg-[--color-accent] px-6 py-3 text-sm font-semibold text-[--color-accent-fg] transition-opacity hover:opacity-90 disabled:opacity-50"
+        >
+          {t.submit}
+        </button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<script>
+  const form = document.getElementById('contact-form') as HTMLFormElement;
+  const status = document.getElementById('form-status') as HTMLParagraphElement;
+  const button = form.querySelector('button[type="submit"]') as HTMLButtonElement;
+
+  const sending = form.dataset.msgSending ?? 'Sending...';
+  const successMsg = form.dataset.msgSuccess ?? "Message sent!";
+  const errorMsg = form.dataset.msgError ?? 'Something went wrong. Please try again.';
+  const sendLabel = form.dataset.btnSend ?? 'Send message';
+
+  const WORKER_URL = import.meta.env.PUBLIC_CONTACT_WORKER_URL;
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    button.disabled = true;
+    button.textContent = sending;
+    status.className = 'hidden text-sm';
+
+    const body = {
+      name: (form.elements.namedItem('name') as HTMLInputElement).value,
+      email: (form.elements.namedItem('email') as HTMLInputElement).value,
+      message: (form.elements.namedItem('message') as HTMLTextAreaElement).value,
+    };
+
+    try {
+      const res = await fetch(WORKER_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(body),
+      });
+
+      if (res.ok) {
+        status.textContent = successMsg;
+        status.className = 'text-sm text-[--color-accent]';
+        form.reset();
+      } else {
+        throw new Error('Server error');
+      }
+    } catch {
+      status.textContent = errorMsg;
+      status.className = 'text-sm text-red-400';
+    } finally {
+      button.disabled = false;
+      button.textContent = sendLabel;
+      status.classList.remove('hidden');
+    }
+  });
+</script>
