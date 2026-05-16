@@ -54,6 +54,23 @@ const t = useTranslations(lang).contact;
           />
         </div>
         <div>
+          <p class="mb-2 text-xs font-medium tracking-wider text-[--color-accent]/80 uppercase">
+            {t.serviceLabel}
+          </p>
+          <div class="flex flex-wrap gap-2" id="service-chips">
+            {t.services.map((service) => (
+              <button
+                type="button"
+                data-service={service}
+                class="service-chip rounded-full border border-[--color-border] bg-[--color-surface] px-3 py-1.5 text-xs font-medium text-[--color-muted] transition-all duration-200 hover:border-[--color-accent]/50 hover:text-[--color-text]"
+              >
+                {service}
+              </button>
+            ))}
+          </div>
+          <input type="hidden" name="service" id="service-value" />
+        </div>
+        <div>
           <label for="message" class="mb-1.5 block text-xs font-medium tracking-wider text-[--color-accent]/80 uppercase">
             {t.message}
           </label>
@@ -80,15 +97,38 @@ const t = useTranslations(lang).contact;
   </div>
 </section>
 
+<style>
+  .service-chip[data-selected='true'] {
+    border-color: var(--color-accent);
+    color: var(--color-accent);
+    background: color-mix(in srgb, var(--color-accent) 10%, transparent);
+  }
+</style>
+
 <script>
   const form = document.getElementById('contact-form') as HTMLFormElement;
   const status = document.getElementById('form-status') as HTMLParagraphElement;
   const button = form.querySelector('button[type="submit"]') as HTMLButtonElement;
+  const serviceInput = document.getElementById('service-value') as HTMLInputElement;
+  const chips = document.querySelectorAll<HTMLButtonElement>('.service-chip');
 
   const sending = form.dataset.msgSending ?? 'Sending...';
   const successMsg = form.dataset.msgSuccess ?? "Message sent!";
   const errorMsg = form.dataset.msgError ?? 'Something went wrong. Please try again.';
   const sendLabel = form.dataset.btnSend ?? 'Send message';
+
+  chips.forEach((chip) => {
+    chip.addEventListener('click', () => {
+      const isSelected = chip.dataset.selected === 'true';
+      chips.forEach((c) => delete c.dataset.selected);
+      if (!isSelected) {
+        chip.dataset.selected = 'true';
+        serviceInput.value = chip.dataset.service ?? '';
+      } else {
+        serviceInput.value = '';
+      }
+    });
+  });
 
   const WORKER_URL = import.meta.env.PUBLIC_CONTACT_WORKER_URL;
 
@@ -98,9 +138,11 @@ const t = useTranslations(lang).contact;
     button.textContent = sending;
     status.className = 'hidden text-sm';
 
+    const service = serviceInput.value || undefined;
     const body = {
       name: (form.elements.namedItem('name') as HTMLInputElement).value,
       email: (form.elements.namedItem('email') as HTMLInputElement).value,
+      ...(service && { service }),
       message: (form.elements.namedItem('message') as HTMLTextAreaElement).value,
     };
 
@@ -115,6 +157,8 @@ const t = useTranslations(lang).contact;
         status.textContent = successMsg;
         status.className = 'text-sm text-[--color-accent]';
         form.reset();
+        chips.forEach((c) => delete c.dataset.selected);
+        serviceInput.value = '';
       } else {
         throw new Error('Server error');
       }

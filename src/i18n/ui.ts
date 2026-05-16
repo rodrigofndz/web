@@ -22,6 +22,10 @@ export const ui = {
       tagline: 'I design and build web, mobile, and backend software — from early-stage products to scalable systems.',
       ctaPrimary: 'Get in touch',
       ctaSecondary: 'See my work',
+      availability: {
+        status: 'available' as 'available' | 'busy' | 'unavailable',
+        label: 'Available for new projects',
+      },
     },
     services: {
       label: 'Services',
@@ -56,6 +60,8 @@ export const ui = {
       namePlaceholder: 'Your name',
       emailPlaceholder: 'you@example.com',
       messagePlaceholder: 'Tell me about your project...',
+      serviceLabel: 'What can I help with?',
+      services: ['Web Design', 'Frontend', 'Backend & API', 'Mobile', 'Consulting', 'Other'],
       submit: 'Send message',
       sending: 'Sending...',
       success: "Message sent! I'll be in touch soon.",
@@ -78,6 +84,10 @@ export const ui = {
       tagline: 'Diseño y desarrollo software web, móvil y backend — desde productos en etapas tempranas hasta sistemas escalables.',
       ctaPrimary: 'Hablemos',
       ctaSecondary: 'Ver mis servicios',
+      availability: {
+        status: 'available' as 'available' | 'busy' | 'unavailable',
+        label: 'Disponible para nuevos proyectos',
+      },
     },
     services: {
       label: 'Servicios',
@@ -112,6 +122,8 @@ export const ui = {
       namePlaceholder: 'Tu nombre',
       emailPlaceholder: 'tu@ejemplo.com',
       messagePlaceholder: 'Cuéntame sobre tu proyecto...',
+      serviceLabel: '¿En qué puedo ayudarte?',
+      services: ['Diseño Web', 'Frontend', 'Backend & API', 'Móvil', 'Consultoría', 'Otro'],
       submit: 'Enviar mensaje',
       sending: 'Enviando...',
       success: '¡Mensaje enviado! Me pondré en contacto pronto.',
@@ -134,6 +146,10 @@ export const ui = {
       tagline: 'Dissenyo i desenvolupo programari web, mòbil i backend — des de productes en fases inicials fins a sistemes escalables.',
       ctaPrimary: "Parlem-ne",
       ctaSecondary: 'Veure els meus serveis',
+      availability: {
+        status: 'available' as 'available' | 'busy' | 'unavailable',
+        label: 'Disponible per a nous projectes',
+      },
     },
     services: {
       label: 'Serveis',
@@ -168,6 +184,8 @@ export const ui = {
       namePlaceholder: 'El teu nom',
       emailPlaceholder: 'tu@exemple.com',
       messagePlaceholder: 'Explica\'m el teu projecte...',
+      serviceLabel: 'En què et puc ajudar?',
+      services: ['Disseny Web', 'Frontend', 'Backend & API', 'Mòbil', 'Consultoria', 'Altre'],
       submit: 'Enviar missatge',
       sending: 'Enviant...',
       success: "Missatge enviat! Em posaré en contacte aviat.",

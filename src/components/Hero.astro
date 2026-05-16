@@ -2,6 +2,12 @@
 import { useTranslations, getLang } from '../i18n/utils';
 const lang = getLang(Astro.currentLocale);
 const t = useTranslations(lang).hero;
+
+const statusColor = {
+  available:   { dot: '#4ade80', bg: 'rgba(74,222,128,0.08)',  border: 'rgba(74,222,128,0.2)'  },
+  busy:        { dot: '#fbbf24', bg: 'rgba(251,191,36,0.08)', border: 'rgba(251,191,36,0.2)'  },
+  unavailable: { dot: '#9ca3af', bg: 'rgba(156,163,175,0.08)', border: 'rgba(156,163,175,0.2)' },
+}[t.availability.status];
 ---
 
 <section class="relative flex min-h-screen flex-col items-center justify-center px-6 pt-20 text-center">
@@ -19,9 +25,29 @@ const t = useTranslations(lang).hero;
   <h1 id="hero-name" class="gradient-text mb-6 text-4xl font-bold tracking-tight sm:text-5xl lg:text-7xl">
     Rodrigo Fernández
   </h1>
-  <p class="mb-10 max-w-xl text-base text-[--color-muted] leading-relaxed sm:text-lg">
+  <p class="mb-6 max-w-xl text-base text-[--color-muted] leading-relaxed sm:text-lg">
     {t.tagline}
   </p>
+
+  <!-- Availability status -->
+  <div
+    class="mb-10 inline-flex max-w-full items-center gap-2 rounded-full px-4 py-1.5"
+    style={`background:${statusColor.bg};border:1px solid ${statusColor.border}`}
+  >
+    <span class="relative flex h-2 w-2 shrink-0">
+      <span
+        class="absolute inline-flex h-full w-full animate-ping rounded-full opacity-60"
+        style={`background:${statusColor.dot}`}
+      ></span>
+      <span
+        class="relative inline-flex h-2 w-2 rounded-full"
+        style={`background:${statusColor.dot}`}
+      ></span>
+    </span>
+    <span class="text-xs font-medium" style={`color:${statusColor.dot}`}>
+      {t.availability.label}
+    </span>
+  </div>
   <div class="flex w-full flex-col items-center gap-3 sm:flex-row sm:justify-center sm:gap-4">
     <a
       href="#contact"
