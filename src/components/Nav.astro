@@ -159,16 +159,23 @@ const langSwitcher = [
   const sun = document.getElementById('icon-sun')!;
   const moon = document.getElementById('icon-moon')!;
 
-  function applyTheme(theme: string) {
+  function applyTheme(theme: string, persist = false) {
     html.dataset.theme = theme;
-    localStorage.setItem('theme', theme);
+    if (persist) localStorage.setItem('theme', theme);
     sun.classList.toggle('hidden', theme !== 'dark');
     moon.classList.toggle('hidden', theme === 'dark');
   }
 
   applyTheme(html.dataset.theme ?? 'dark');
   themeBtn.addEventListener('click', () => {
-    applyTheme(html.dataset.theme === 'dark' ? 'light' : 'dark');
+    applyTheme(html.dataset.theme === 'dark' ? 'light' : 'dark', true);
+  });
+
+  // Follow the OS theme live, unless the user has set a manual preference
+  window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
+    if (!localStorage.getItem('theme')) {
+      applyTheme(e.matches ? 'dark' : 'light');
+    }
   });
 
   // Mobile menu toggle
