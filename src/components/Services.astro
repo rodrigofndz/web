@@ -26,7 +26,7 @@ const services = t.items.map((item, i) => ({ ...item, icon: icons[i] }));
     <p class="gradient-text mb-10 text-2xl font-bold tracking-tight md:mb-16 md:text-3xl">
       {t.heading}
     </p>
-    <div class="grid gap-px border border-[--color-border] bg-[--color-border] sm:grid-cols-2 lg:grid-cols-3">
+    <div class="grid gap-px border border-[--color-border] bg-[--color-border] md:grid-cols-2 lg:grid-cols-3">
       {services.map((service) => (
         <div class="group relative bg-[--color-bg] p-6 transition-colors hover:bg-[--color-surface] md:p-8">
           <div class="absolute inset-x-0 top-0 h-px bg-[--color-accent] opacity-0 transition-opacity group-hover:opacity-100"></div>
