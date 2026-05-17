@@ -18,6 +18,11 @@
   --color-button: #6366f1;
   --color-button-hover: #4f46e5;
   --color-button-active: #4338ca;
+  /* Availability badge — bright shades for the dark background */
+  --badge-available: #4ade80;
+  --badge-busy: #fbbf24;
+  --badge-unavailable: #f87171;
+  --badge-neutral: #9ca3af;
 }
 
 /* Light theme */
@@ -34,6 +39,11 @@
   --color-button: #4f46e5;
   --color-button-hover: #4338ca;
   --color-button-active: #3730a3;
+  /* Availability badge — darker shades, legible on the light background */
+  --badge-available: #15803d;
+  --badge-busy: #b45309;
+  --badge-unavailable: #dc2626;
+  --badge-neutral: #6b7280;
 }
 
 html {

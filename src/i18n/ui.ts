@@ -25,7 +25,7 @@ export const ui = {
       availability: {
         labels: {
           available: 'Available for new projects',
-          busy: 'Booked — limited availability',
+          busy: 'Booked — Limited availability',
           unavailable: 'Not taking new projects',
           empty: 'I forgot to set my status',
           notfound: 'The server ghosted me',

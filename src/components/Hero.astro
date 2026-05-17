@@ -36,7 +36,7 @@ const POLL_INTERVAL_MS = 5 * 60 * 1000;
   <div
     id="availability-badge"
     class="mb-10 inline-flex max-w-full items-center gap-2 rounded-full px-4 py-1.5"
-    style="background:rgba(156,163,175,0.08);border:1px solid rgba(156,163,175,0.2)"
+    style="background:color-mix(in srgb, var(--badge-neutral) 8%, transparent);border:1px solid color-mix(in srgb, var(--badge-neutral) 20%, transparent)"
     data-delay={REQUEST_DELAY_MS}
     data-poll={POLL_INTERVAL_MS}
     data-label-available={labels.available}
@@ -50,15 +50,15 @@ const POLL_INTERVAL_MS = 5 * 60 * 1000;
       <span
         id="availability-ping"
         class="absolute inline-flex h-full w-full animate-ping rounded-full opacity-60"
-        style="background:#9ca3af"
+        style="background:var(--badge-neutral)"
       ></span>
       <span
         id="availability-dot"
         class="relative inline-flex h-2 w-2 rounded-full"
-        style="background:#9ca3af"
+        style="background:var(--badge-neutral)"
       ></span>
     </span>
-    <span id="availability-label" class="text-xs font-medium" style="color:#9ca3af">
+    <span id="availability-label" class="text-xs font-medium" style="color:var(--badge-neutral)">
       {labels.loading}
     </span>
   </div>
@@ -79,14 +79,15 @@ const POLL_INTERVAL_MS = 5 * 60 * 1000;
 </section>
 
 <script>
-  // dot/bg/border colors per state; `pulse` = whether the dot animates.
+  // Each state → a theme-aware CSS variable (defined per theme in global.css)
+  // and whether the dot pulses.
   const COLORS = {
-    available:   { dot: '#4ade80', bg: 'rgba(74,222,128,0.08)',  border: 'rgba(74,222,128,0.2)',  pulse: true  },
-    busy:        { dot: '#fbbf24', bg: 'rgba(251,191,36,0.08)',  border: 'rgba(251,191,36,0.2)',  pulse: true  },
-    unavailable: { dot: '#f87171', bg: 'rgba(248,113,113,0.08)', border: 'rgba(248,113,113,0.2)', pulse: false },
-    empty:       { dot: '#9ca3af', bg: 'rgba(156,163,175,0.08)', border: 'rgba(156,163,175,0.2)', pulse: false },
-    notfound:    { dot: '#9ca3af', bg: 'rgba(156,163,175,0.08)', border: 'rgba(156,163,175,0.2)', pulse: false },
-    loading:     { dot: '#9ca3af', bg: 'rgba(156,163,175,0.08)', border: 'rgba(156,163,175,0.2)', pulse: true  },
+    available:   { color: 'var(--badge-available)',   pulse: true  },
+    busy:        { color: 'var(--badge-busy)',        pulse: true  },
+    unavailable: { color: 'var(--badge-unavailable)', pulse: false },
+    empty:       { color: 'var(--badge-neutral)',     pulse: false },
+    notfound:    { color: 'var(--badge-neutral)',     pulse: false },
+    loading:     { color: 'var(--badge-neutral)',     pulse: true  },
   };
   type State = keyof typeof COLORS;
 
@@ -103,15 +104,15 @@ const POLL_INTERVAL_MS = 5 * 60 * 1000;
     const pollInterval = Number(badge.dataset.poll) || 0;
 
     const apply = (state: State) => {
-      const c = COLORS[state];
-      badge.style.background = c.bg;
-      badge.style.border = `1px solid ${c.border}`;
-      ping.style.background = c.dot;
-      dot.style.background = c.dot;
-      label.style.color = c.dot;
+      const { color, pulse } = COLORS[state];
+      badge.style.background = `color-mix(in srgb, ${color} 8%, transparent)`;
+      badge.style.border = `1px solid color-mix(in srgb, ${color} 20%, transparent)`;
+      ping.style.background = color;
+      dot.style.background = color;
+      label.style.color = color;
       const key = `label${state[0].toUpperCase()}${state.slice(1)}`;
       label.textContent = badge.dataset[key] ?? label.textContent;
-      ping.classList.toggle('animate-ping', c.pulse);
+      ping.classList.toggle('animate-ping', pulse);
     };
 
     const wait = (ms: number) => new Promise((r) => setTimeout(r, ms));
