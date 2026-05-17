@@ -1,0 +1,135 @@
+---
+// Hidden admin page — flips the availability status via POST /api/availability.
+// Not linked anywhere and excluded from indexing; the bearer token is the only
+// access guard, so use a high-entropy token.
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex, nofollow" />
+    <title>Availability admin</title>
+    <style>
+      :root { color-scheme: dark; }
+      * { box-sizing: border-box; }
+      body {
+        margin: 0;
+        min-height: 100vh;
+        display: grid;
+        place-items: center;
+        background: #0a0a0a;
+        color: #e5e5e5;
+        font-family: ui-sans-serif, system-ui, -apple-system, sans-serif;
+      }
+      .card {
+        width: min(92vw, 22rem);
+        padding: 2rem;
+        border: 1px solid #262626;
+        border-radius: 0.75rem;
+        background: #121212;
+      }
+      h1 { margin: 0 0 1.5rem; font-size: 1.05rem; font-weight: 600; }
+      label {
+        display: block;
+        margin-bottom: 0.4rem;
+        font-size: 0.7rem;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+        color: #8a8a8a;
+      }
+      input {
+        width: 100%;
+        padding: 0.6rem 0.75rem;
+        border: 1px solid #262626;
+        border-radius: 0.5rem;
+        background: #1c1c1c;
+        color: #e5e5e5;
+        font-size: 0.9rem;
+      }
+      input:focus { outline: none; border-color: #555; }
+      .row { display: flex; gap: 0.5rem; margin-top: 1rem; }
+      button {
+        flex: 1;
+        padding: 0.6rem;
+        border: 1px solid #262626;
+        border-radius: 0.5rem;
+        background: #1c1c1c;
+        color: #e5e5e5;
+        font-size: 0.82rem;
+        cursor: pointer;
+      }
+      button:hover { border-color: #555; }
+      button.save { background: #e5e5e5; color: #0a0a0a; border-color: #e5e5e5; }
+      #result { margin: 1rem 0 0; font-size: 0.82rem; min-height: 1.2em; }
+    </style>
+  </head>
+  <body>
+    <div class="card">
+      <h1>Availability</h1>
+
+      <label for="token">Write token</label>
+      <input id="token" type="password" autocomplete="off" placeholder="Bearer token" />
+      <div class="row">
+        <button class="save" id="save-token" type="button">Save token</button>
+      </div>
+
+      <div class="row">
+        <button data-status="available" type="button">Available</button>
+        <button data-status="busy" type="button">Busy</button>
+        <button data-status="unavailable" type="button">Unavailable</button>
+      </div>
+
+      <p id="result"></p>
+    </div>
+
+    <script>
+      const tokenInput = document.getElementById('token') as HTMLInputElement;
+      const result = document.getElementById('result') as HTMLParagraphElement;
+
+      const saved = sessionStorage.getItem('admin-token');
+      if (saved) tokenInput.value = saved;
+
+      const show = (msg: string, ok: boolean) => {
+        result.textContent = msg;
+        result.style.color = ok ? '#4ade80' : '#f87171';
+      };
+
+      document.getElementById('save-token')!.addEventListener('click', () => {
+        sessionStorage.setItem('admin-token', tokenInput.value.trim());
+        show('Token saved for this session.', true);
+      });
+
+      // Show the current status on load.
+      fetch('/api/availability')
+        .then((r) => r.json())
+        .then((d) => show(`Current status: ${d.status}`, true))
+        .catch(() => {});
+
+      document.querySelectorAll<HTMLButtonElement>('button[data-status]').forEach((btn) => {
+        btn.addEventListener('click', async () => {
+          const token = tokenInput.value.trim();
+          if (!token) return show('Enter a token first.', false);
+
+          try {
+            const res = await fetch('/api/availability', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${token}`,
+              },
+              body: JSON.stringify({ status: btn.dataset.status }),
+            });
+            const data = await res.json().catch(() => ({}) as Record<string, unknown>);
+            if (res.ok) show(`Status set to "${data.status}".`, true);
+            else if (res.status === 401) show('Unauthorized — wrong token.', false);
+            else show(String(data.error ?? `Failed (${res.status}).`), false);
+          } catch {
+            show('Network error.', false);
+          }
+        });
+      });
+    </script>
+  </body>
+</html>
