@@ -2,12 +2,7 @@
 import { useTranslations, getLang } from '../i18n/utils';
 const lang = getLang(Astro.currentLocale);
 const t = useTranslations(lang).hero;
-
-const statusColor = {
-  available:   { dot: '#4ade80', bg: 'rgba(74,222,128,0.08)',  border: 'rgba(74,222,128,0.2)'  },
-  busy:        { dot: '#fbbf24', bg: 'rgba(251,191,36,0.08)', border: 'rgba(251,191,36,0.2)'  },
-  unavailable: { dot: '#9ca3af', bg: 'rgba(156,163,175,0.08)', border: 'rgba(156,163,175,0.2)' },
-}[t.availability.status];
+const labels = t.availability.labels;
 ---
 
 <section class="relative flex min-h-screen flex-col items-center justify-center px-6 pt-20 text-center">
@@ -29,23 +24,30 @@ const statusColor = {
     {t.tagline}
   </p>
 
-  <!-- Availability status -->
+  <!-- Availability status — renders neutral, then a client fetch fills in the
+       live status from /api/availability (KV-backed, updatable without a redeploy). -->
   <div
+    id="availability-badge"
     class="mb-10 inline-flex max-w-full items-center gap-2 rounded-full px-4 py-1.5"
-    style={`background:${statusColor.bg};border:1px solid ${statusColor.border}`}
+    style="background:rgba(156,163,175,0.08);border:1px solid rgba(156,163,175,0.2)"
+    data-label-available={labels.available}
+    data-label-busy={labels.busy}
+    data-label-unavailable={labels.unavailable}
   >
     <span class="relative flex h-2 w-2 shrink-0">
       <span
-        class="absolute inline-flex h-full w-full animate-ping rounded-full opacity-60"
-        style={`background:${statusColor.dot}`}
+        id="availability-ping"
+        class="absolute inline-flex h-full w-full rounded-full opacity-60"
+        style="background:#9ca3af"
       ></span>
       <span
+        id="availability-dot"
         class="relative inline-flex h-2 w-2 rounded-full"
-        style={`background:${statusColor.dot}`}
+        style="background:#9ca3af"
       ></span>
     </span>
-    <span class="text-xs font-medium" style={`color:${statusColor.dot}`}>
-      {t.availability.label}
+    <span id="availability-label" class="text-xs font-medium" style="color:#9ca3af">
+      {labels.available}
     </span>
   </div>
   <div class="flex w-full flex-col items-center gap-3 sm:flex-row sm:justify-center sm:gap-4">
@@ -63,3 +65,37 @@ const statusColor = {
     </a>
   </div>
 </section>
+
+<script>
+  const COLORS = {
+    available:   { dot: '#4ade80', bg: 'rgba(74,222,128,0.08)',  border: 'rgba(74,222,128,0.2)'  },
+    busy:        { dot: '#fbbf24', bg: 'rgba(251,191,36,0.08)',  border: 'rgba(251,191,36,0.2)'  },
+    unavailable: { dot: '#9ca3af', bg: 'rgba(156,163,175,0.08)', border: 'rgba(156,163,175,0.2)' },
+  };
+  type Status = keyof typeof COLORS;
+
+  const badge = document.getElementById('availability-badge');
+  const ping = document.getElementById('availability-ping');
+  const dot = document.getElementById('availability-dot');
+  const label = document.getElementById('availability-label');
+
+  if (badge && ping && dot && label) {
+    const apply = (status: Status) => {
+      const c = COLORS[status];
+      badge.style.background = c.bg;
+      badge.style.border = `1px solid ${c.border}`;
+      ping.style.background = c.dot;
+      dot.style.background = c.dot;
+      label.style.color = c.dot;
+      label.textContent =
+        badge.dataset[`label${status[0].toUpperCase()}${status.slice(1)}`] ?? label.textContent;
+      // Only an active status pulses; unavailable stays static.
+      ping.classList.toggle('animate-ping', status !== 'unavailable');
+    };
+
+    fetch('/api/availability')
+      .then((r) => (r.ok ? r.json() : Promise.reject()))
+      .then((d) => apply(d.status in COLORS ? d.status : 'unavailable'))
+      .catch(() => apply('unavailable'));
+  }
+</script>

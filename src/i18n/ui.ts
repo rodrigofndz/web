@@ -23,8 +23,11 @@ export const ui = {
       ctaPrimary: 'Get in touch',
       ctaSecondary: 'See my work',
       availability: {
-        status: 'available' as 'available' | 'busy' | 'unavailable',
-        label: 'Available for new projects',
+        labels: {
+          available: 'Available for new projects',
+          busy: 'Booked — limited availability',
+          unavailable: 'Not taking new projects',
+        },
       },
     },
     services: {
@@ -85,8 +88,11 @@ export const ui = {
       ctaPrimary: 'Hablemos',
       ctaSecondary: 'Ver mis servicios',
       availability: {
-        status: 'available' as 'available' | 'busy' | 'unavailable',
-        label: 'Disponible para nuevos proyectos',
+        labels: {
+          available: 'Disponible para nuevos proyectos',
+          busy: 'Agenda casi completa',
+          unavailable: 'Sin disponibilidad por ahora',
+        },
       },
     },
     services: {
@@ -147,8 +153,11 @@ export const ui = {
       ctaPrimary: "Parlem-ne",
       ctaSecondary: 'Veure els meus serveis',
       availability: {
-        status: 'available' as 'available' | 'busy' | 'unavailable',
-        label: 'Disponible per a nous projectes',
+        labels: {
+          available: 'Disponible per a nous projectes',
+          busy: 'Agenda gairebé plena',
+          unavailable: 'Sense disponibilitat ara mateix',
+        },
       },
     },
     services: {
