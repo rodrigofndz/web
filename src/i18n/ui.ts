@@ -18,7 +18,14 @@ export const ui = {
       contact: 'Contact',
     },
     hero: {
-      role: 'Full-Stack Software Engineer',
+      roles: [
+        'Software Engineer',
+        'Frontend Developer',
+        'Backend Engineer',
+        'Software Architect',
+        'Software Designer',
+        '.NET Developer',
+      ],
       tagline: 'I design and build web, mobile, and backend software — from early-stage products to scalable systems.',
       ctaPrimary: 'Get in touch',
       ctaSecondary: 'See my work',
@@ -86,7 +93,14 @@ export const ui = {
       contact: 'Contacto',
     },
     hero: {
-      role: 'Ingeniero de Software Full-Stack',
+      roles: [
+        'Ingeniero de Software',
+        'Desarrollador Frontend',
+        'Ingeniero Backend',
+        'Arquitecto de Software',
+        'Diseñador de Software',
+        'Desarrollador .NET',
+      ],
       tagline: 'Diseño y desarrollo software web, móvil y backend — desde productos en etapas tempranas hasta sistemas escalables.',
       ctaPrimary: 'Hablemos',
       ctaSecondary: 'Ver mis servicios',
@@ -154,7 +168,14 @@ export const ui = {
       contact: 'Contacte',
     },
     hero: {
-      role: 'Enginyer de Software Full-Stack',
+      roles: [
+        'Enginyer de Software',
+        'Desenvolupador Frontend',
+        'Enginyer Backend',
+        'Arquitecte de Software',
+        'Dissenyador de Software',
+        'Desenvolupador .NET',
+      ],
       tagline: 'Dissenyo i desenvolupo programari web, mòbil i backend — des de productes en fases inicials fins a sistemes escalables.',
       ctaPrimary: "Parlem-ne",
       ctaSecondary: 'Veure els meus serveis',

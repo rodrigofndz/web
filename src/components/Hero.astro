@@ -3,6 +3,7 @@ import { useTranslations, getLang } from '../i18n/utils';
 const lang = getLang(Astro.currentLocale);
 const t = useTranslations(lang).hero;
 const labels = t.availability.labels;
+const roles = t.roles;
 
 // Artificial delay (ms) before the availability fetch resolves, so the
 // "loading" placeholder stays visible.
@@ -22,7 +23,7 @@ const POLL_INTERVAL_MS = 5 * 60 * 1000;
   </div>
 
   <p class="mb-4 rounded-full border border-[--color-border] bg-[--color-surface] px-4 py-1.5 text-xs font-medium tracking-widest text-[--color-accent] uppercase">
-    {t.role}
+    <span id="hero-role" data-roles={JSON.stringify(roles)}>{roles[0]}</span><span class="role-caret" aria-hidden="true"></span>
   </p>
   <h1 id="hero-name" class="gradient-text mb-6 text-4xl font-bold tracking-tight sm:text-5xl lg:text-7xl">
     Rodrigo Fernández
@@ -138,5 +139,70 @@ const POLL_INTERVAL_MS = 5 * 60 * 1000;
       // Re-check periodically so an open page picks up status changes.
       if (pollInterval > 0) setInterval(() => refresh(true), pollInterval);
     })();
+  }
+</script>
+
+<style>
+  /* Blinking caret for the role typewriter */
+  .role-caret {
+    display: inline-block;
+    width: 2px;
+    height: 0.9em;
+    margin-left: 0.15em;
+    vertical-align: -1px;
+    background: currentColor;
+    animation: role-blink 1s step-end infinite;
+  }
+  @keyframes role-blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
+  }
+  /* Don't animate for users who prefer reduced motion */
+  @media (prefers-reduced-motion: reduce) {
+    .role-caret { display: none; }
+  }
+</style>
+
+<script>
+  // Role badge typewriter — cycles through the localized roles, typing
+  // and deleting each one in a loop.
+  const TYPE_MS = 65; // per character typed
+  const DELETE_MS = 35; // per character deleted
+  const HOLD_MS = 1800; // pause while a role is fully shown
+  const PAUSE_MS = 450; // pause after deleting, before the next role
+
+  const roleEl = document.getElementById('hero-role');
+  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  if (roleEl && !reducedMotion) {
+    let roles: string[] = [];
+    try {
+      roles = JSON.parse(roleEl.dataset.roles ?? '[]');
+    } catch {
+      roles = [];
+    }
+
+    if (roles.length > 1) {
+      const wait = (ms: number) => new Promise((r) => setTimeout(r, ms));
+
+      (async () => {
+        let i = 0; // roles[0] is already rendered server-side
+        while (true) {
+          await wait(HOLD_MS);
+          const current = roles[i];
+          for (let n = current.length - 1; n >= 0; n--) {
+            roleEl.textContent = current.slice(0, n);
+            await wait(DELETE_MS);
+          }
+          await wait(PAUSE_MS);
+          i = (i + 1) % roles.length;
+          const next = roles[i];
+          for (let n = 1; n <= next.length; n++) {
+            roleEl.textContent = next.slice(0, n);
+            await wait(TYPE_MS);
+          }
+        }
+      })();
+    }
   }
 </script>
