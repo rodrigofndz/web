@@ -1,43 +1,72 @@
-# Astro Starter Kit: Minimal
+# rodfer.me
 
-```sh
-pnpm create astro@latest -- --template minimal
-```
+Personal portfolio of **Rodrigo Fernández**, full-stack software engineer.
+A trilingual, statically-rendered site with a live availability status and a
+working contact form, running on Cloudflare Pages.
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+🔗 **Live:** [rodfer.me](https://rodfer.me)
 
-## 🚀 Project Structure
+## Features
 
-Inside of your Astro project, you'll see the following folders and files:
+- **Trilingual** — English, Spanish and Catalan, via Astro's i18n routing
+  (`/`, `/es/`, `/ca/`).
+- **Light / dark theme** — follows the OS preference and reacts to it live,
+  with a manual toggle that takes precedence once used.
+- **Live availability badge** — a KV-backed status (`available` / `busy` /
+  `unavailable`) that updates at runtime with no redeploy, plus distinct
+  `empty` and `notfound` fallback states.
+- **Contact form** — multi-select service categories, a honeypot, and email
+  delivery through the Resend API.
+
+## Tech stack
+
+- [Astro 6](https://astro.build) — `output: static`
+- [Tailwind CSS v4](https://tailwindcss.com) via `@tailwindcss/vite`
+- TypeScript
+- [Cloudflare Pages](https://pages.cloudflare.com) + Pages Functions
+- [Cloudflare KV](https://developers.cloudflare.com/kv/) — availability state
+- [Resend](https://resend.com) — contact form email
+- pnpm
+
+## Project structure
 
 ```text
-/
-├── public/
+├── functions/api/        Cloudflare Pages Functions
+│   ├── availability.ts   Availability status (KV-backed)
+│   └── contact.ts        Contact form → Resend
 ├── src/
-│   └── pages/
-│       └── index.astro
-└── package.json
+│   ├── components/       Hero, Nav, Services, About, Contact
+│   ├── i18n/             ui.ts (translations) + helpers
+│   ├── layouts/          BaseLayout
+│   ├── pages/            index.astro, es/, ca/
+│   └── styles/           global.css (theme variables)
+└── wrangler.toml         Pages configuration
 ```
 
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
+## Local development
 
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
+Requires **Node.js 22.x** and **pnpm**.
 
-Any static assets, like images, can be placed in the `public/` directory.
+```sh
+pnpm install
+```
 
-## 🧞 Commands
+There are two ways to run the site locally, because the `/api/*` routes are
+Cloudflare Pages Functions:
 
-All commands are run from the root of the project, from a terminal:
+| Command | Serves | URL | Notes |
+| :------ | :----- | :-- | :---- |
+| `pnpm dev` | the Astro site only | `localhost:4321` | Fast HMR. `/api/*` returns 404 — the availability badge will show its `notfound` state. |
+| `pnpm build && pnpm pages:dev` | site **+** functions **+** local KV | `localhost:8788` | Needed to exercise the `/api/*` routes and the contact form. Rebuild to pick up changes. |
 
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `pnpm install`             | Installs dependencies                            |
-| `pnpm dev`             | Starts local dev server at `localhost:4321`      |
-| `pnpm build`           | Build your production site to `./dist/`          |
-| `pnpm preview`         | Preview your build locally, before deploying     |
-| `pnpm astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `pnpm astro -- --help` | Get help using the Astro CLI                     |
+## Deployment
 
-## 👀 Want to learn more?
+Hosted on **Cloudflare Pages** with Git integration — every push to `master`
+runs `pnpm build` and deploys automatically. The `functions/` directory is
+picked up as Pages Functions, and the KV namespace binding is read from
+`wrangler.toml`.
 
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+## License
+
+© Rodrigo Fernández. This is a personal project — the code is public to view,
+but not licensed for reuse.
