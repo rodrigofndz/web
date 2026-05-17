@@ -72,6 +72,7 @@ const t = useTranslations(lang).contact;
               <button
                 type="button"
                 data-service={service}
+                aria-pressed="false"
                 class="service-chip rounded-full border border-[--color-border] bg-[--color-surface] px-3 py-1.5 text-xs font-medium text-[--color-muted] transition-all duration-200 hover:border-[--color-accent]/50 hover:text-[--color-text]"
               >
                 {service}
@@ -98,7 +99,7 @@ const t = useTranslations(lang).contact;
 
         <button
           type="submit"
-          class="rounded-lg bg-[--color-accent] px-6 py-3 text-sm font-semibold text-[--color-accent-fg] transition-opacity hover:opacity-90 disabled:opacity-50"
+          class="submit-btn rounded-lg px-6 py-3 text-sm font-semibold"
         >
           {t.submit}
         </button>
@@ -112,6 +113,29 @@ const t = useTranslations(lang).contact;
     border-color: var(--color-accent);
     color: var(--color-accent);
     background: color-mix(in srgb, var(--color-accent) 10%, transparent);
+  }
+
+  .submit-btn {
+    background-color: var(--color-button);
+    color: #ffffff;
+    cursor: pointer;
+    transition:
+      background-color 0.18s ease,
+      transform 0.1s ease,
+      opacity 0.18s ease;
+  }
+  /* hover cue — darker fill */
+  .submit-btn:hover:not(:disabled) {
+    background-color: var(--color-button-hover);
+  }
+  /* click cue — darker still + quick press-in */
+  .submit-btn:active:not(:disabled) {
+    background-color: var(--color-button-active);
+    transform: scale(0.97);
+  }
+  .submit-btn:disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
   }
 </style>
 
@@ -127,16 +151,26 @@ const t = useTranslations(lang).contact;
   const errorMsg = form.dataset.msgError ?? 'Something went wrong. Please try again.';
   const sendLabel = form.dataset.btnSend ?? 'Send message';
 
+  // The success message auto-hides after this many ms.
+  const SUCCESS_VISIBLE_MS = 5000;
+  let hideTimer: ReturnType<typeof setTimeout> | undefined;
+
+  // Chips are a multi-select toggle group — the hidden input holds the
+  // selected services as a comma-separated list.
+  const syncServices = () => {
+    serviceInput.value = Array.from(chips)
+      .filter((c) => c.dataset.selected === 'true')
+      .map((c) => c.dataset.service ?? '')
+      .join(', ');
+  };
+
   chips.forEach((chip) => {
     chip.addEventListener('click', () => {
-      const isSelected = chip.dataset.selected === 'true';
-      chips.forEach((c) => delete c.dataset.selected);
-      if (!isSelected) {
-        chip.dataset.selected = 'true';
-        serviceInput.value = chip.dataset.service ?? '';
-      } else {
-        serviceInput.value = '';
-      }
+      const selected = chip.dataset.selected !== 'true';
+      if (selected) chip.dataset.selected = 'true';
+      else delete chip.dataset.selected;
+      chip.setAttribute('aria-pressed', String(selected));
+      syncServices();
     });
   });
 
@@ -145,6 +179,7 @@ const t = useTranslations(lang).contact;
     button.disabled = true;
     button.textContent = sending;
     status.className = 'hidden text-sm';
+    clearTimeout(hideTimer);
 
     const service = serviceInput.value || undefined;
     const body = {
@@ -166,8 +201,13 @@ const t = useTranslations(lang).contact;
         status.textContent = successMsg;
         status.className = 'text-sm text-[--color-accent]';
         form.reset();
-        chips.forEach((c) => delete c.dataset.selected);
+        chips.forEach((c) => {
+          delete c.dataset.selected;
+          c.setAttribute('aria-pressed', 'false');
+        });
         serviceInput.value = '';
+        // auto-hide the success message after a few seconds
+        hideTimer = setTimeout(() => status.classList.add('hidden'), SUCCESS_VISIBLE_MS);
       } else {
         throw new Error('Server error');
       }
