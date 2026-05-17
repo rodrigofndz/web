@@ -153,6 +153,13 @@ const langSwitcher = [
     observer.observe(heroName);
   }
 
+  // Clicking the nav name scrolls to the top instead of reloading the page
+  // (a reload would reset the availability badge to its loading state).
+  navName.addEventListener('click', (e) => {
+    e.preventDefault();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+
   // Theme toggle
   const html = document.documentElement;
   const themeBtn = document.getElementById('theme-toggle')!;
