@@ -3,6 +3,13 @@ import { useTranslations, getLang } from '../i18n/utils';
 const lang = getLang(Astro.currentLocale);
 const t = useTranslations(lang).hero;
 const labels = t.availability.labels;
+
+// Artificial delay (ms) before the availability fetch resolves, so the
+// "loading" placeholder stays visible.
+const REQUEST_DELAY_MS = 1000;
+
+// How often (ms) an open page re-checks the availability status.
+const POLL_INTERVAL_MS = 5 * 60 * 1000;
 ---
 
 <section class="relative flex min-h-screen flex-col items-center justify-center px-6 pt-20 text-center">
@@ -24,20 +31,25 @@ const labels = t.availability.labels;
     {t.tagline}
   </p>
 
-  <!-- Availability status — renders neutral, then a client fetch fills in the
-       live status from /api/availability (KV-backed, updatable without a redeploy). -->
+  <!-- Availability status — renders a "loading" placeholder, then a client
+       fetch fills in the live status from /api/availability (KV-backed). -->
   <div
     id="availability-badge"
     class="mb-10 inline-flex max-w-full items-center gap-2 rounded-full px-4 py-1.5"
     style="background:rgba(156,163,175,0.08);border:1px solid rgba(156,163,175,0.2)"
+    data-delay={REQUEST_DELAY_MS}
+    data-poll={POLL_INTERVAL_MS}
     data-label-available={labels.available}
     data-label-busy={labels.busy}
     data-label-unavailable={labels.unavailable}
+    data-label-empty={labels.empty}
+    data-label-notfound={labels.notfound}
+    data-label-loading={labels.loading}
   >
     <span class="relative flex h-2 w-2 shrink-0">
       <span
         id="availability-ping"
-        class="absolute inline-flex h-full w-full rounded-full opacity-60"
+        class="absolute inline-flex h-full w-full animate-ping rounded-full opacity-60"
         style="background:#9ca3af"
       ></span>
       <span
@@ -47,7 +59,7 @@ const labels = t.availability.labels;
       ></span>
     </span>
     <span id="availability-label" class="text-xs font-medium" style="color:#9ca3af">
-      {labels.available}
+      {labels.loading}
     </span>
   </div>
   <div class="flex w-full flex-col items-center gap-3 sm:flex-row sm:justify-center sm:gap-4">
@@ -67,12 +79,19 @@ const labels = t.availability.labels;
 </section>
 
 <script>
+  // dot/bg/border colors per state; `pulse` = whether the dot animates.
   const COLORS = {
-    available:   { dot: '#4ade80', bg: 'rgba(74,222,128,0.08)',  border: 'rgba(74,222,128,0.2)'  },
-    busy:        { dot: '#fbbf24', bg: 'rgba(251,191,36,0.08)',  border: 'rgba(251,191,36,0.2)'  },
-    unavailable: { dot: '#9ca3af', bg: 'rgba(156,163,175,0.08)', border: 'rgba(156,163,175,0.2)' },
+    available:   { dot: '#4ade80', bg: 'rgba(74,222,128,0.08)',  border: 'rgba(74,222,128,0.2)',  pulse: true  },
+    busy:        { dot: '#fbbf24', bg: 'rgba(251,191,36,0.08)',  border: 'rgba(251,191,36,0.2)',  pulse: true  },
+    unavailable: { dot: '#f87171', bg: 'rgba(248,113,113,0.08)', border: 'rgba(248,113,113,0.2)', pulse: false },
+    empty:       { dot: '#9ca3af', bg: 'rgba(156,163,175,0.08)', border: 'rgba(156,163,175,0.2)', pulse: false },
+    notfound:    { dot: '#9ca3af', bg: 'rgba(156,163,175,0.08)', border: 'rgba(156,163,175,0.2)', pulse: false },
+    loading:     { dot: '#9ca3af', bg: 'rgba(156,163,175,0.08)', border: 'rgba(156,163,175,0.2)', pulse: true  },
   };
-  type Status = keyof typeof COLORS;
+  type State = keyof typeof COLORS;
+
+  // Statuses the API may legitimately return.
+  const FROM_API: State[] = ['available', 'busy', 'unavailable', 'empty'];
 
   const badge = document.getElementById('availability-badge');
   const ping = document.getElementById('availability-ping');
@@ -80,22 +99,43 @@ const labels = t.availability.labels;
   const label = document.getElementById('availability-label');
 
   if (badge && ping && dot && label) {
-    const apply = (status: Status) => {
-      const c = COLORS[status];
+    const delay = Number(badge.dataset.delay) || 0;
+    const pollInterval = Number(badge.dataset.poll) || 0;
+
+    const apply = (state: State) => {
+      const c = COLORS[state];
       badge.style.background = c.bg;
       badge.style.border = `1px solid ${c.border}`;
       ping.style.background = c.dot;
       dot.style.background = c.dot;
       label.style.color = c.dot;
-      label.textContent =
-        badge.dataset[`label${status[0].toUpperCase()}${status.slice(1)}`] ?? label.textContent;
-      // Only an active status pulses; unavailable stays static.
-      ping.classList.toggle('animate-ping', status !== 'unavailable');
+      const key = `label${state[0].toUpperCase()}${state.slice(1)}`;
+      label.textContent = badge.dataset[key] ?? label.textContent;
+      ping.classList.toggle('animate-ping', c.pulse);
     };
 
-    fetch('/api/availability')
-      .then((r) => (r.ok ? r.json() : Promise.reject()))
-      .then((d) => apply(d.status in COLORS ? d.status : 'unavailable'))
-      .catch(() => apply('unavailable'));
+    const wait = (ms: number) => new Promise((r) => setTimeout(r, ms));
+
+    // Fetch the current status and update the badge. On a background poll a
+    // transient failure keeps the last known state instead of flipping to
+    // the "notfound" message.
+    const refresh = async (isPoll: boolean) => {
+      try {
+        const res = await fetch('/api/availability');
+        if (!res.ok) throw new Error('bad response');
+        const data = await res.json();
+        apply(FROM_API.includes(data.status) ? data.status : 'empty');
+      } catch {
+        if (!isPoll) apply('notfound'); // couldn't reach the API
+      }
+    };
+
+    (async () => {
+      apply('loading');
+      await wait(delay); // keeps the placeholder visible
+      await refresh(false);
+      // Re-check periodically so an open page picks up status changes.
+      if (pollInterval > 0) setInterval(() => refresh(true), pollInterval);
+    })();
   }
 </script>

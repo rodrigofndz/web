@@ -21,9 +21,10 @@ const json = (data: unknown, status = 200): Response =>
   });
 
 // GET /api/availability — public read of the current status.
+// No value set in KV yet → 'empty' so the UI can show its distinct state.
 export const onRequestGet: PagesFunction<Env> = async ({ env }) => {
   const stored = await env.AVAILABILITY.get('status');
-  return json({ status: isStatus(stored) ? stored : 'available' });
+  return json({ status: isStatus(stored) ? stored : 'empty' });
 };
 
 // POST /api/availability — write a new status. Bearer-token guarded.
