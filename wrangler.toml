@@ -1,0 +1,11 @@
+name = "rodfer-web"
+pages_build_output_dir = "dist"
+compatibility_date = "2026-05-01"
+
+# KV namespace backing the availability status.
+# Create it once with:  wrangler kv namespace create AVAILABILITY
+# then paste the printed id below. Production also needs this binding
+# added under Pages → Settings → Functions → KV namespace bindings.
+[[kv_namespaces]]
+binding = "AVAILABILITY"
+id = "REPLACE_WITH_KV_NAMESPACE_ID"

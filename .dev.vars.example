@@ -1,0 +1,16 @@
+# Copy to .dev.vars (gitignored) for local `wrangler pages dev`.
+# In production, set these under Pages → Settings → Variables and secrets.
+
+# Bearer token guarding POST /api/availability. Generate with:
+#   openssl rand -hex 32
+AVAILABILITY_WRITE_TOKEN=
+
+# Resend API key — https://resend.com/api-keys
+RESEND_API_KEY=
+
+# Where contact form submissions are delivered.
+CONTACT_TO=you@example.com
+
+# Sender address. Until your domain is verified in Resend, this must be
+# onboarding@resend.dev (which only delivers to the Resend account owner).
+CONTACT_FROM=onboarding@resend.dev

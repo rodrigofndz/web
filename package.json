@@ -6,11 +6,16 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
+    "pages:dev": "wrangler pages dev",
     "astro": "astro"
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.2.0",
     "astro": "^6.3.3",
     "tailwindcss": "^4.2.0"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "^4.20260516.1",
+    "wrangler": "^4.92.0"
   }
 }
